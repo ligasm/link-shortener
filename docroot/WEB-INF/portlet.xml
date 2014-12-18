@@ -20,4 +20,23 @@
 			<keywords>Auto Shortener</keywords>
 		</portlet-info>
 	</portlet>
+	<portlet>
+		<portlet-name>link-translator</portlet-name>
+		<display-name>Link Translator</display-name>
+		<portlet-class>com.liferay.linkshortener.portlet.LinkTranslatorPortlet</portlet-class>
+		<init-param>
+			<name>view-template</name>
+			<value>/html/translator/view.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<resource-bundle>content.Language</resource-bundle>
+		<portlet-info>
+			<title>Link Translator</title>
+			<short-title>Link Translator</short-title>
+			<keywords>Link Translator</keywords>
+		</portlet-info>
+	</portlet>
 </portlet-app>

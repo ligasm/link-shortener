@@ -4,5 +4,6 @@
 <display>
 	<category name="link.shortener">
 		<portlet id="auto-shortener" />
+		<portlet id="link-translator" />
 	</category>
 </display>

@@ -29,9 +29,11 @@
 
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
 <%@ page import="com.liferay.linkshortener.model.Link" %>
+<%@ page import="com.liferay.linkshortener.service.LinkLocalServiceUtil" %>
 <%@ page import="com.liferay.linkshortener.util.ApplicationPropsValues" %>
 
 <%@ page import="static com.liferay.linkshortener.portlet.AutoShortenerConstants.*" %>
+<%@ page import="static com.liferay.linkshortener.portlet.LinkTranslatorConstants.*" %>
 
 <portlet:defineObjects/>
 
