@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.linkshortener.model.Link">
+		<field name="uuid" type="String" />
+		<field name="linkId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="longLink" type="String" />
+		<field name="shortLink" type="String" />
+		<field name="active" type="boolean" />
+		<field name="autoGen" type="boolean" />
+	</model>
+</model-hints>

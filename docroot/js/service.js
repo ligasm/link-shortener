@@ -1,0 +1,1 @@
+Liferay.Service.register("Liferay.Service.LinkShortener", "com.liferay.linkshortener.service", "link-shortener-portlet");
