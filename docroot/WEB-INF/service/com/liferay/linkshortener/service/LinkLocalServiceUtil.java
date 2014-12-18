@@ -285,6 +285,47 @@ public class LinkLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	/**
+	* Method loads links auto-generated or explicitly created links from
+	* database. Method supports paging.
+	*
+	* @param autoGen specifies what kind of links should be loaded
+	* @param start the lower bound of the range of links
+	* @param end the upper bound of the range of links (not inclusive)
+	* @return the range of matching links
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.linkshortener.model.Link> getLinksByAutoGen(
+		boolean autoGen, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getLinksByAutoGen(autoGen, start, end);
+	}
+
+	/**
+	* Method returns the link which short link matches the provided value.
+	*
+	* @param shortLink the short link
+	* @return the matching link
+	* @throws com.liferay.linkshortener.NoSuchLinkException if a matching link
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.linkshortener.model.Link getLinksByShortLink(
+		java.lang.String shortLink)
+		throws com.liferay.linkshortener.NoSuchLinkException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getLinksByShortLink(shortLink);
+	}
+
+	/**
+	* Factory method for a new Link object.
+	*
+	* @return new object
+	*/
+	public static com.liferay.linkshortener.model.Link linkFactory() {
+		return getService().linkFactory();
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

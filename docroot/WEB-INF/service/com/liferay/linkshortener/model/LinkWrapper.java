@@ -380,7 +380,7 @@ public class LinkWrapper implements Link, ModelWrapper<Link> {
 		return new LinkWrapper((Link)_link.clone());
 	}
 
-	public int compareTo(Link link) {
+	public int compareTo(com.liferay.linkshortener.model.Link link) {
 		return _link.compareTo(link);
 	}
 
@@ -389,15 +389,15 @@ public class LinkWrapper implements Link, ModelWrapper<Link> {
 		return _link.hashCode();
 	}
 
-	public com.liferay.portal.model.CacheModel<Link> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.linkshortener.model.Link> toCacheModel() {
 		return _link.toCacheModel();
 	}
 
-	public Link toEscapedModel() {
+	public com.liferay.linkshortener.model.Link toEscapedModel() {
 		return new LinkWrapper(_link.toEscapedModel());
 	}
 
-	public Link toUnescapedModel() {
+	public com.liferay.linkshortener.model.Link toUnescapedModel() {
 		return new LinkWrapper(_link.toUnescapedModel());
 	}
 

@@ -115,6 +115,18 @@ public class LinkLocalServiceClp implements LinkLocalService {
 		_methodName18 = "setBeanIdentifier";
 
 		_methodParameterTypes18 = new String[] { "java.lang.String" };
+
+		_methodName20 = "getLinksByAutoGen";
+
+		_methodParameterTypes20 = new String[] { "boolean", "int", "int" };
+
+		_methodName21 = "getLinksByShortLink";
+
+		_methodParameterTypes21 = new String[] { "java.lang.String" };
+
+		_methodName22 = "linkFactory";
+
+		_methodParameterTypes22 = new String[] {  };
 	}
 
 	public com.liferay.linkshortener.model.Link addLink(
@@ -673,6 +685,91 @@ public class LinkLocalServiceClp implements LinkLocalService {
 		throw new UnsupportedOperationException();
 	}
 
+	public java.util.List<com.liferay.linkshortener.model.Link> getLinksByAutoGen(
+		boolean autoGen, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20,
+					new Object[] { autoGen, start, end });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.linkshortener.model.Link>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	public com.liferay.linkshortener.model.Link getLinksByShortLink(
+		java.lang.String shortLink)
+		throws com.liferay.linkshortener.NoSuchLinkException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21,
+					new Object[] { ClpSerializer.translateInput(shortLink) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.linkshortener.NoSuchLinkException) {
+				throw (com.liferay.linkshortener.NoSuchLinkException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.linkshortener.model.Link)ClpSerializer.translateOutput(returnObj);
+	}
+
+	public com.liferay.linkshortener.model.Link linkFactory() {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22, new Object[] {  });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.linkshortener.model.Link)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -712,4 +809,10 @@ public class LinkLocalServiceClp implements LinkLocalService {
 	private String[] _methodParameterTypes17;
 	private String _methodName18;
 	private String[] _methodParameterTypes18;
+	private String _methodName20;
+	private String[] _methodParameterTypes20;
+	private String _methodName21;
+	private String[] _methodParameterTypes21;
+	private String _methodName22;
+	private String[] _methodParameterTypes22;
 }
