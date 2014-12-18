@@ -1,28 +1,40 @@
-<%
-	/**
-	 * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
-	 *
-	 * This library is free software; you can redistribute it and/or modify it under
-	 * the terms of the GNU Lesser General Public License as published by the Free
-	 * Software Foundation; either version 2.1 of the License, or (at your option)
-	 * any later version.
-	 *
-	 * This library is distributed in the hope that it will be useful, but WITHOUT
-	 * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-	 * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
-	 * details.
-	 */
-%>
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
-<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
-<%@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
-<%@ taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %>
-<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
-<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
-<%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
+<%@include file="../init.jspf" %>
 
-<portlet:defineObjects/>
+<c:set var="encodedLink">
+	<%= ParamUtil.getString(renderRequest, ENCODED_LINK_PARAM, "") %>
+</c:set>
 
-New protlet
+<liferay-ui:error key="auto-shortener-not-saved" />
+
+<c:choose>
+	<c:when test="${not empty encodedLink}">
+		<c:out escapeXml="true" value="${encodedLink}" />
+	</c:when>
+	<c:otherwise>
+		<portlet:actionURL name="shortenLinkAction" var="actionUrl" />
+		<aui:form action="${actionUrl}" method="POST" name="fm">
+			<liferay-ui:error key="link-required" />
+			<aui:input name="<%= LINK_PARAM %>" required="true" />
+
+			<aui:button-row>
+				<aui:button type="submit" />
+			</aui:button-row>
+		</aui:form>
+	</c:otherwise>
+</c:choose>
