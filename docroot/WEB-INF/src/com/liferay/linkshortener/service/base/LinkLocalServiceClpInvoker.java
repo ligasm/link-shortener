@@ -112,7 +112,7 @@ public class LinkLocalServiceClpInvoker {
 
 		_methodParameterTypes39 = new String[] { "java.lang.String" };
 
-		_methodName44 = "addLink";
+		_methodName44 = "addLinkWithCheck";
 
 		_methodParameterTypes44 = new String[] {
 				"com.liferay.linkshortener.model.Link"
@@ -130,7 +130,7 @@ public class LinkLocalServiceClpInvoker {
 
 		_methodParameterTypes47 = new String[] {  };
 
-		_methodName48 = "updateLink";
+		_methodName48 = "updateLinkWithCheck";
 
 		_methodParameterTypes48 = new String[] {
 				"com.liferay.linkshortener.model.Link"
@@ -240,7 +240,7 @@ public class LinkLocalServiceClpInvoker {
 
 		if (_methodName44.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes44, parameterTypes)) {
-			return LinkLocalServiceUtil.addLink((com.liferay.linkshortener.model.Link)arguments[0]);
+			return LinkLocalServiceUtil.addLinkWithCheck((com.liferay.linkshortener.model.Link)arguments[0]);
 		}
 
 		if (_methodName45.equals(name) &&
@@ -262,7 +262,7 @@ public class LinkLocalServiceClpInvoker {
 
 		if (_methodName48.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes48, parameterTypes)) {
-			return LinkLocalServiceUtil.updateLink((com.liferay.linkshortener.model.Link)arguments[0]);
+			return LinkLocalServiceUtil.updateLinkWithCheck((com.liferay.linkshortener.model.Link)arguments[0]);
 		}
 
 		throw new UnsupportedOperationException();

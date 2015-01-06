@@ -244,6 +244,19 @@ public interface LinkLocalService extends BaseLocalService, InvokableLocalServic
 		throws java.lang.Throwable;
 
 	/**
+	* Adds the link to the database. Also notifies the appropriate model
+	* listeners.
+	*
+	* @param link the link
+	* @return the link that was added
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.linkshortener.model.Link addLinkWithCheck(
+		com.liferay.linkshortener.model.Link link)
+		throws com.liferay.linkshortener.ShortLinkTakenException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Method loads links auto-generated or explicitly created links from
 	* database. Method supports paging.
 	*
@@ -279,4 +292,17 @@ public interface LinkLocalService extends BaseLocalService, InvokableLocalServic
 	* @return new object
 	*/
 	public com.liferay.linkshortener.model.Link linkFactory();
+
+	/**
+	* Updates the link in the database or adds it if it does not yet exist.
+	* Also notifies the appropriate model listeners.
+	*
+	* @param link the link
+	* @return the link that was updated
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.linkshortener.model.Link updateLinkWithCheck(
+		com.liferay.linkshortener.model.Link link)
+		throws com.liferay.linkshortener.ShortLinkTakenException,
+			com.liferay.portal.kernel.exception.SystemException;
 }
