@@ -34,16 +34,12 @@ import java.util.Date;
 public class LinkCacheModel implements CacheModel<Link>, Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
 		sb.append(", linkId=");
 		sb.append(linkId);
-		sb.append(", groupId=");
-		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", createDate=");
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
@@ -72,8 +68,6 @@ public class LinkCacheModel implements CacheModel<Link>, Serializable {
 		}
 
 		linkImpl.setLinkId(linkId);
-		linkImpl.setGroupId(groupId);
-		linkImpl.setCompanyId(companyId);
 
 		if (createDate == Long.MIN_VALUE) {
 			linkImpl.setCreateDate(null);
@@ -113,8 +107,6 @@ public class LinkCacheModel implements CacheModel<Link>, Serializable {
 
 	public String uuid;
 	public long linkId;
-	public long groupId;
-	public long companyId;
 	public long createDate;
 	public long modifiedDate;
 	public String longLink;

@@ -48,8 +48,6 @@ public class LinkWrapper implements Link, ModelWrapper<Link> {
 
 		attributes.put("uuid", getUuid());
 		attributes.put("linkId", getLinkId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("longLink", getLongLink());
@@ -71,18 +69,6 @@ public class LinkWrapper implements Link, ModelWrapper<Link> {
 
 		if (linkId != null) {
 			setLinkId(linkId);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");
@@ -174,42 +160,6 @@ public class LinkWrapper implements Link, ModelWrapper<Link> {
 	*/
 	public void setLinkId(long linkId) {
 		_link.setLinkId(linkId);
-	}
-
-	/**
-	* Returns the group ID of this link.
-	*
-	* @return the group ID of this link
-	*/
-	public long getGroupId() {
-		return _link.getGroupId();
-	}
-
-	/**
-	* Sets the group ID of this link.
-	*
-	* @param groupId the group ID of this link
-	*/
-	public void setGroupId(long groupId) {
-		_link.setGroupId(groupId);
-	}
-
-	/**
-	* Returns the company ID of this link.
-	*
-	* @return the company ID of this link
-	*/
-	public long getCompanyId() {
-		return _link.getCompanyId();
-	}
-
-	/**
-	* Sets the company ID of this link.
-	*
-	* @param companyId the company ID of this link
-	*/
-	public void setCompanyId(long companyId) {
-		_link.setCompanyId(companyId);
 	}
 
 	/**
@@ -380,7 +330,7 @@ public class LinkWrapper implements Link, ModelWrapper<Link> {
 		return new LinkWrapper((Link)_link.clone());
 	}
 
-	public int compareTo(com.liferay.linkshortener.model.Link link) {
+	public int compareTo(Link link) {
 		return _link.compareTo(link);
 	}
 
@@ -389,15 +339,15 @@ public class LinkWrapper implements Link, ModelWrapper<Link> {
 		return _link.hashCode();
 	}
 
-	public com.liferay.portal.model.CacheModel<com.liferay.linkshortener.model.Link> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<Link> toCacheModel() {
 		return _link.toCacheModel();
 	}
 
-	public com.liferay.linkshortener.model.Link toEscapedModel() {
+	public Link toEscapedModel() {
 		return new LinkWrapper(_link.toEscapedModel());
 	}
 
-	public com.liferay.linkshortener.model.Link toUnescapedModel() {
+	public Link toUnescapedModel() {
 		return new LinkWrapper(_link.toUnescapedModel());
 	}
 

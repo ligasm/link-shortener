@@ -176,21 +176,6 @@ public interface LinkLocalService extends BaseLocalService, InvokableLocalServic
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the link with the UUID in the group.
-	*
-	* @param uuid the UUID of link
-	* @param groupId the group id of the link
-	* @return the link
-	* @throws PortalException if a link with the UUID in the group could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.linkshortener.model.Link getLinkByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns a range of all the links.
 	*
 	* <p>

@@ -84,59 +84,55 @@ public class LinkLocalServiceClpInvoker {
 
 		_methodParameterTypes11 = new String[] { "java.io.Serializable" };
 
-		_methodName12 = "getLinkByUuidAndGroupId";
+		_methodName12 = "getLinks";
 
-		_methodParameterTypes12 = new String[] { "java.lang.String", "long" };
+		_methodParameterTypes12 = new String[] { "int", "int" };
 
-		_methodName13 = "getLinks";
+		_methodName13 = "getLinksCount";
 
-		_methodParameterTypes13 = new String[] { "int", "int" };
+		_methodParameterTypes13 = new String[] {  };
 
-		_methodName14 = "getLinksCount";
+		_methodName14 = "updateLink";
 
-		_methodParameterTypes14 = new String[] {  };
+		_methodParameterTypes14 = new String[] {
+				"com.liferay.linkshortener.model.Link"
+			};
 
 		_methodName15 = "updateLink";
 
 		_methodParameterTypes15 = new String[] {
-				"com.liferay.linkshortener.model.Link"
-			};
-
-		_methodName16 = "updateLink";
-
-		_methodParameterTypes16 = new String[] {
 				"com.liferay.linkshortener.model.Link", "boolean"
 			};
 
-		_methodName39 = "getBeanIdentifier";
+		_methodName38 = "getBeanIdentifier";
 
-		_methodParameterTypes39 = new String[] {  };
+		_methodParameterTypes38 = new String[] {  };
 
-		_methodName40 = "setBeanIdentifier";
+		_methodName39 = "setBeanIdentifier";
 
-		_methodParameterTypes40 = new String[] { "java.lang.String" };
+		_methodParameterTypes39 = new String[] { "java.lang.String" };
 
-		_methodName45 = "addLink";
+		_methodName44 = "addLink";
 
-		_methodParameterTypes45 = new String[] {
+		_methodParameterTypes44 = new String[] {
 				"com.liferay.linkshortener.model.Link"
 			};
 
-		_methodName46 = "getLinksByAutoGen";
+		_methodName45 = "getLinksByAutoGen";
 
-		_methodParameterTypes46 = new String[] { "boolean", "int", "int" };
+		_methodParameterTypes45 = new String[] { "boolean", "int", "int" };
 
-		_methodName47 = "getLinksByShortLink";
+		_methodName46 = "getLinksByShortLink";
 
-		_methodParameterTypes47 = new String[] { "java.lang.String" };
+		_methodParameterTypes46 = new String[] { "java.lang.String" };
 
-		_methodName48 = "linkFactory";
+		_methodName47 = "linkFactory";
 
-		_methodParameterTypes48 = new String[] {  };
+		_methodParameterTypes47 = new String[] {  };
 
-		_methodName49 = "updateLink";
+		_methodName48 = "updateLink";
 
-		_methodParameterTypes49 = new String[] {
+		_methodParameterTypes48 = new String[] {
 				"com.liferay.linkshortener.model.Link"
 			};
 	}
@@ -210,68 +206,62 @@ public class LinkLocalServiceClpInvoker {
 
 		if (_methodName12.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes12, parameterTypes)) {
-			return LinkLocalServiceUtil.getLinkByUuidAndGroupId((java.lang.String)arguments[0],
-				((Long)arguments[1]).longValue());
-		}
-
-		if (_methodName13.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes13, parameterTypes)) {
 			return LinkLocalServiceUtil.getLinks(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
+		if (_methodName13.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes13, parameterTypes)) {
+			return LinkLocalServiceUtil.getLinksCount();
+		}
+
 		if (_methodName14.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes14, parameterTypes)) {
-			return LinkLocalServiceUtil.getLinksCount();
+			return LinkLocalServiceUtil.updateLink((com.liferay.linkshortener.model.Link)arguments[0]);
 		}
 
 		if (_methodName15.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes15, parameterTypes)) {
-			return LinkLocalServiceUtil.updateLink((com.liferay.linkshortener.model.Link)arguments[0]);
-		}
-
-		if (_methodName16.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes16, parameterTypes)) {
 			return LinkLocalServiceUtil.updateLink((com.liferay.linkshortener.model.Link)arguments[0],
 				((Boolean)arguments[1]).booleanValue());
 		}
 
-		if (_methodName39.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes39, parameterTypes)) {
+		if (_methodName38.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes38, parameterTypes)) {
 			return LinkLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName40.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes40, parameterTypes)) {
+		if (_methodName39.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes39, parameterTypes)) {
 			LinkLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName45.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes45, parameterTypes)) {
+		if (_methodName44.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes44, parameterTypes)) {
 			return LinkLocalServiceUtil.addLink((com.liferay.linkshortener.model.Link)arguments[0]);
 		}
 
-		if (_methodName46.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes46, parameterTypes)) {
+		if (_methodName45.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes45, parameterTypes)) {
 			return LinkLocalServiceUtil.getLinksByAutoGen(((Boolean)arguments[0]).booleanValue(),
 				((Integer)arguments[1]).intValue(),
 				((Integer)arguments[2]).intValue());
 		}
 
+		if (_methodName46.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes46, parameterTypes)) {
+			return LinkLocalServiceUtil.getLinksByShortLink((java.lang.String)arguments[0]);
+		}
+
 		if (_methodName47.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes47, parameterTypes)) {
-			return LinkLocalServiceUtil.getLinksByShortLink((java.lang.String)arguments[0]);
+			return LinkLocalServiceUtil.linkFactory();
 		}
 
 		if (_methodName48.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes48, parameterTypes)) {
-			return LinkLocalServiceUtil.linkFactory();
-		}
-
-		if (_methodName49.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes49, parameterTypes)) {
 			return LinkLocalServiceUtil.updateLink((com.liferay.linkshortener.model.Link)arguments[0]);
 		}
 
@@ -310,12 +300,12 @@ public class LinkLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName16;
-	private String[] _methodParameterTypes16;
+	private String _methodName38;
+	private String[] _methodParameterTypes38;
 	private String _methodName39;
 	private String[] _methodParameterTypes39;
-	private String _methodName40;
-	private String[] _methodParameterTypes40;
+	private String _methodName44;
+	private String[] _methodParameterTypes44;
 	private String _methodName45;
 	private String[] _methodParameterTypes45;
 	private String _methodName46;
@@ -324,6 +314,4 @@ public class LinkLocalServiceClpInvoker {
 	private String[] _methodParameterTypes47;
 	private String _methodName48;
 	private String[] _methodParameterTypes48;
-	private String _methodName49;
-	private String[] _methodParameterTypes49;
 }

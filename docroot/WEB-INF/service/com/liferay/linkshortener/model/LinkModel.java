@@ -89,34 +89,6 @@ public interface LinkModel extends BaseModel<Link> {
 	public void setLinkId(long linkId);
 
 	/**
-	 * Returns the group ID of this link.
-	 *
-	 * @return the group ID of this link
-	 */
-	public long getGroupId();
-
-	/**
-	 * Sets the group ID of this link.
-	 *
-	 * @param groupId the group ID of this link
-	 */
-	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this link.
-	 *
-	 * @return the company ID of this link
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this link.
-	 *
-	 * @param companyId the company ID of this link
-	 */
-	public void setCompanyId(long companyId);
-
-	/**
 	 * Returns the create date of this link.
 	 *
 	 * @return the create date of this link

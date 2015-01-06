@@ -97,16 +97,6 @@ public class LinkPersistenceImpl extends BasePersistenceImpl<Link>
 			LinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
 			new String[] { String.class.getName() });
-	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(LinkModelImpl.ENTITY_CACHE_ENABLED,
-			LinkModelImpl.FINDER_CACHE_ENABLED, LinkImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] { String.class.getName(), Long.class.getName() },
-			LinkModelImpl.UUID_COLUMN_BITMASK |
-			LinkModelImpl.GROUPID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_G = new FinderPath(LinkModelImpl.ENTITY_CACHE_ENABLED,
-			LinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-			new String[] { String.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_SL_AG = new FinderPath(LinkModelImpl.ENTITY_CACHE_ENABLED,
 			LinkModelImpl.FINDER_CACHE_ENABLED, LinkImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchBySL_AG",
@@ -153,10 +143,6 @@ public class LinkPersistenceImpl extends BasePersistenceImpl<Link>
 	public void cacheResult(Link link) {
 		EntityCacheUtil.putResult(LinkModelImpl.ENTITY_CACHE_ENABLED,
 			LinkImpl.class, link.getPrimaryKey(), link);
-
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] { link.getUuid(), Long.valueOf(link.getGroupId()) },
-			link);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_SL_AG,
 			new Object[] { link.getShortLink(), Boolean.valueOf(
@@ -236,14 +222,6 @@ public class LinkPersistenceImpl extends BasePersistenceImpl<Link>
 	protected void cacheUniqueFindersCache(Link link) {
 		if (link.isNew()) {
 			Object[] args = new Object[] {
-					link.getUuid(), Long.valueOf(link.getGroupId())
-				};
-
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
-				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args, link);
-
-			args = new Object[] {
 					link.getShortLink(), Boolean.valueOf(link.getAutoGen())
 				};
 
@@ -253,18 +231,6 @@ public class LinkPersistenceImpl extends BasePersistenceImpl<Link>
 		}
 		else {
 			LinkModelImpl linkModelImpl = (LinkModelImpl)link;
-
-			if ((linkModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						link.getUuid(), Long.valueOf(link.getGroupId())
-					};
-
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
-					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					link);
-			}
 
 			if ((linkModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_SL_AG.getColumnBitmask()) != 0) {
@@ -283,24 +249,6 @@ public class LinkPersistenceImpl extends BasePersistenceImpl<Link>
 		LinkModelImpl linkModelImpl = (LinkModelImpl)link;
 
 		Object[] args = new Object[] {
-				link.getUuid(), Long.valueOf(link.getGroupId())
-			};
-
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
-
-		if ((linkModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-			args = new Object[] {
-					linkModelImpl.getOriginalUuid(),
-					Long.valueOf(linkModelImpl.getOriginalGroupId())
-				};
-
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
-		}
-
-		args = new Object[] {
 				link.getShortLink(), Boolean.valueOf(link.getAutoGen())
 			};
 
@@ -505,8 +453,6 @@ public class LinkPersistenceImpl extends BasePersistenceImpl<Link>
 
 		linkImpl.setUuid(link.getUuid());
 		linkImpl.setLinkId(link.getLinkId());
-		linkImpl.setGroupId(link.getGroupId());
-		linkImpl.setCompanyId(link.getCompanyId());
 		linkImpl.setCreateDate(link.getCreateDate());
 		linkImpl.setModifiedDate(link.getModifiedDate());
 		linkImpl.setLongLink(link.getLongLink());
@@ -1001,167 +947,6 @@ public class LinkPersistenceImpl extends BasePersistenceImpl<Link>
 		}
 		else {
 			return null;
-		}
-	}
-
-	/**
-	 * Returns the link where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.linkshortener.NoSuchLinkException} if it could not be found.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching link
-	 * @throws com.liferay.linkshortener.NoSuchLinkException if a matching link could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Link findByUUID_G(String uuid, long groupId)
-		throws NoSuchLinkException, SystemException {
-		Link link = fetchByUUID_G(uuid, groupId);
-
-		if (link == null) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("uuid=");
-			msg.append(uuid);
-
-			msg.append(", groupId=");
-			msg.append(groupId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
-			}
-
-			throw new NoSuchLinkException(msg.toString());
-		}
-
-		return link;
-	}
-
-	/**
-	 * Returns the link where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching link, or <code>null</code> if a matching link could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Link fetchByUUID_G(String uuid, long groupId)
-		throws SystemException {
-		return fetchByUUID_G(uuid, groupId, true);
-	}
-
-	/**
-	 * Returns the link where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to use the finder cache
-	 * @return the matching link, or <code>null</code> if a matching link could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Link fetchByUUID_G(String uuid, long groupId,
-		boolean retrieveFromCache) throws SystemException {
-		Object[] finderArgs = new Object[] { uuid, groupId };
-
-		Object result = null;
-
-		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_UUID_G,
-					finderArgs, this);
-		}
-
-		if (result instanceof Link) {
-			Link link = (Link)result;
-
-			if (!Validator.equals(uuid, link.getUuid()) ||
-					(groupId != link.getGroupId())) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler query = new StringBundler(3);
-
-			query.append(_SQL_SELECT_LINK_WHERE);
-
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
-			}
-			else {
-				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_G_UUID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_UUID_G_UUID_2);
-				}
-			}
-
-			query.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				if (uuid != null) {
-					qPos.add(uuid);
-				}
-
-				qPos.add(groupId);
-
-				List<Link> list = q.list();
-
-				result = list;
-
-				Link link = null;
-
-				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-						finderArgs, list);
-				}
-				else {
-					link = list.get(0);
-
-					cacheResult(link);
-
-					if ((link.getUuid() == null) ||
-							!link.getUuid().equals(uuid) ||
-							(link.getGroupId() != groupId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, link);
-					}
-				}
-
-				return link;
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (result == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-						finderArgs);
-				}
-
-				closeSession(session);
-			}
-		}
-		else {
-			if (result instanceof List<?>) {
-				return null;
-			}
-			else {
-				return (Link)result;
-			}
 		}
 	}
 
@@ -1820,21 +1605,6 @@ public class LinkPersistenceImpl extends BasePersistenceImpl<Link>
 	}
 
 	/**
-	 * Removes the link where uuid = &#63; and groupId = &#63; from the database.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the link that was removed
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Link removeByUUID_G(String uuid, long groupId)
-		throws NoSuchLinkException, SystemException {
-		Link link = findByUUID_G(uuid, groupId);
-
-		return remove(link);
-	}
-
-	/**
 	 * Removes the link where shortLink = &#63; and autoGen = &#63; from the database.
 	 *
 	 * @param shortLink the short link
@@ -1928,77 +1698,6 @@ public class LinkPersistenceImpl extends BasePersistenceImpl<Link>
 				}
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID,
-					finderArgs, count);
-
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	/**
-	 * Returns the number of links where uuid = &#63; and groupId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the number of matching links
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int countByUUID_G(String uuid, long groupId)
-		throws SystemException {
-		Object[] finderArgs = new Object[] { uuid, groupId };
-
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_UUID_G,
-				finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(3);
-
-			query.append(_SQL_COUNT_LINK_WHERE);
-
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
-			}
-			else {
-				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_G_UUID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_UUID_G_UUID_2);
-				}
-			}
-
-			query.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				if (uuid != null) {
-					qPos.add(uuid);
-				}
-
-				qPos.add(groupId);
-
-				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
-
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G,
 					finderArgs, count);
 
 				closeSession(session);
@@ -2216,10 +1915,6 @@ public class LinkPersistenceImpl extends BasePersistenceImpl<Link>
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "link.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "link.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(link.uuid IS NULL OR link.uuid = ?)";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "link.uuid IS NULL AND ";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "link.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(link.uuid IS NULL OR link.uuid = ?) AND ";
-	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "link.groupId = ?";
 	private static final String _FINDER_COLUMN_SL_AG_SHORTLINK_1 = "link.shortLink IS NULL AND ";
 	private static final String _FINDER_COLUMN_SL_AG_SHORTLINK_2 = "link.shortLink = ? AND ";
 	private static final String _FINDER_COLUMN_SL_AG_SHORTLINK_3 = "(link.shortLink IS NULL OR link.shortLink = ?) AND ";

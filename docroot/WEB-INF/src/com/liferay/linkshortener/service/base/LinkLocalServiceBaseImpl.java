@@ -211,20 +211,6 @@ public abstract class LinkLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the link with the UUID in the group.
-	 *
-	 * @param uuid the UUID of link
-	 * @param groupId the group id of the link
-	 * @return the link
-	 * @throws PortalException if a link with the UUID in the group could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Link getLinkByUuidAndGroupId(String uuid, long groupId)
-		throws PortalException, SystemException {
-		return linkPersistence.findByUUID_G(uuid, groupId);
-	}
-
-	/**
 	 * Returns a range of all the links.
 	 *
 	 * <p>

@@ -65,8 +65,6 @@ public class LinkModelImpl extends BaseModelImpl<Link> implements LinkModel {
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "uuid_", Types.VARCHAR },
 			{ "linkId", Types.BIGINT },
-			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "longLink", Types.VARCHAR },
@@ -74,7 +72,7 @@ public class LinkModelImpl extends BaseModelImpl<Link> implements LinkModel {
 			{ "active_", Types.BOOLEAN },
 			{ "autoGen", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LinkShortener_Link (uuid_ VARCHAR(75) null,linkId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,longLink VARCHAR(75) null,shortLink VARCHAR(75) null,active_ BOOLEAN,autoGen BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table LinkShortener_Link (uuid_ VARCHAR(75) null,linkId LONG not null primary key,createDate DATE null,modifiedDate DATE null,longLink VARCHAR(75) null,shortLink VARCHAR(75) null,active_ BOOLEAN,autoGen BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table LinkShortener_Link";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -89,9 +87,8 @@ public class LinkModelImpl extends BaseModelImpl<Link> implements LinkModel {
 				"value.object.column.bitmask.enabled.com.liferay.linkshortener.model.Link"),
 			true);
 	public static long AUTOGEN_COLUMN_BITMASK = 1L;
-	public static long GROUPID_COLUMN_BITMASK = 2L;
-	public static long SHORTLINK_COLUMN_BITMASK = 4L;
-	public static long UUID_COLUMN_BITMASK = 8L;
+	public static long SHORTLINK_COLUMN_BITMASK = 2L;
+	public static long UUID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -108,8 +105,6 @@ public class LinkModelImpl extends BaseModelImpl<Link> implements LinkModel {
 
 		model.setUuid(soapModel.getUuid());
 		model.setLinkId(soapModel.getLinkId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setLongLink(soapModel.getLongLink());
@@ -176,8 +171,6 @@ public class LinkModelImpl extends BaseModelImpl<Link> implements LinkModel {
 
 		attributes.put("uuid", getUuid());
 		attributes.put("linkId", getLinkId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("longLink", getLongLink());
@@ -200,18 +193,6 @@ public class LinkModelImpl extends BaseModelImpl<Link> implements LinkModel {
 
 		if (linkId != null) {
 			setLinkId(linkId);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");
@@ -280,36 +261,6 @@ public class LinkModelImpl extends BaseModelImpl<Link> implements LinkModel {
 
 	public void setLinkId(long linkId) {
 		_linkId = linkId;
-	}
-
-	@JSON
-	public long getGroupId() {
-		return _groupId;
-	}
-
-	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
-		}
-
-		_groupId = groupId;
-	}
-
-	public long getOriginalGroupId() {
-		return _originalGroupId;
-	}
-
-	@JSON
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@JSON
@@ -412,7 +363,7 @@ public class LinkModelImpl extends BaseModelImpl<Link> implements LinkModel {
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
 			Link.class.getName(), getPrimaryKey());
 	}
 
@@ -443,8 +394,6 @@ public class LinkModelImpl extends BaseModelImpl<Link> implements LinkModel {
 
 		linkImpl.setUuid(getUuid());
 		linkImpl.setLinkId(getLinkId());
-		linkImpl.setGroupId(getGroupId());
-		linkImpl.setCompanyId(getCompanyId());
 		linkImpl.setCreateDate(getCreateDate());
 		linkImpl.setModifiedDate(getModifiedDate());
 		linkImpl.setLongLink(getLongLink());
@@ -504,10 +453,6 @@ public class LinkModelImpl extends BaseModelImpl<Link> implements LinkModel {
 
 		linkModelImpl._originalUuid = linkModelImpl._uuid;
 
-		linkModelImpl._originalGroupId = linkModelImpl._groupId;
-
-		linkModelImpl._setOriginalGroupId = false;
-
 		linkModelImpl._originalShortLink = linkModelImpl._shortLink;
 
 		linkModelImpl._originalAutoGen = linkModelImpl._autoGen;
@@ -530,10 +475,6 @@ public class LinkModelImpl extends BaseModelImpl<Link> implements LinkModel {
 		}
 
 		linkCacheModel.linkId = getLinkId();
-
-		linkCacheModel.groupId = getGroupId();
-
-		linkCacheModel.companyId = getCompanyId();
 
 		Date createDate = getCreateDate();
 
@@ -578,16 +519,12 @@ public class LinkModelImpl extends BaseModelImpl<Link> implements LinkModel {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
 		sb.append(", linkId=");
 		sb.append(getLinkId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", createDate=");
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
@@ -606,7 +543,7 @@ public class LinkModelImpl extends BaseModelImpl<Link> implements LinkModel {
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.linkshortener.model.Link");
@@ -619,14 +556,6 @@ public class LinkModelImpl extends BaseModelImpl<Link> implements LinkModel {
 		sb.append(
 			"<column><column-name>linkId</column-name><column-value><![CDATA[");
 		sb.append(getLinkId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>createDate</column-name><column-value><![CDATA[");
@@ -663,10 +592,6 @@ public class LinkModelImpl extends BaseModelImpl<Link> implements LinkModel {
 	private String _uuid;
 	private String _originalUuid;
 	private long _linkId;
-	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
-	private long _companyId;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private String _longLink;

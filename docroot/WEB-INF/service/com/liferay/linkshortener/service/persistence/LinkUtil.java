@@ -322,51 +322,6 @@ public class LinkUtil {
 	}
 
 	/**
-	* Returns the link where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.linkshortener.NoSuchLinkException} if it could not be found.
-	*
-	* @param uuid the uuid
-	* @param groupId the group ID
-	* @return the matching link
-	* @throws com.liferay.linkshortener.NoSuchLinkException if a matching link could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.linkshortener.model.Link findByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.linkshortener.NoSuchLinkException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByUUID_G(uuid, groupId);
-	}
-
-	/**
-	* Returns the link where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param uuid the uuid
-	* @param groupId the group ID
-	* @return the matching link, or <code>null</code> if a matching link could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.linkshortener.model.Link fetchByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByUUID_G(uuid, groupId);
-	}
-
-	/**
-	* Returns the link where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param uuid the uuid
-	* @param groupId the group ID
-	* @param retrieveFromCache whether to use the finder cache
-	* @return the matching link, or <code>null</code> if a matching link could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.linkshortener.model.Link fetchByUUID_G(
-		java.lang.String uuid, long groupId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
-	}
-
-	/**
 	* Returns the link where shortLink = &#63; and autoGen = &#63; or throws a {@link com.liferay.linkshortener.NoSuchLinkException} if it could not be found.
 	*
 	* @param shortLink the short link
@@ -609,21 +564,6 @@ public class LinkUtil {
 	}
 
 	/**
-	* Removes the link where uuid = &#63; and groupId = &#63; from the database.
-	*
-	* @param uuid the uuid
-	* @param groupId the group ID
-	* @return the link that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.linkshortener.model.Link removeByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.linkshortener.NoSuchLinkException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByUUID_G(uuid, groupId);
-	}
-
-	/**
 	* Removes the link where shortLink = &#63; and autoGen = &#63; from the database.
 	*
 	* @param shortLink the short link
@@ -669,19 +609,6 @@ public class LinkUtil {
 	public static int countByUuid(java.lang.String uuid)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().countByUuid(uuid);
-	}
-
-	/**
-	* Returns the number of links where uuid = &#63; and groupId = &#63;.
-	*
-	* @param uuid the uuid
-	* @param groupId the group ID
-	* @return the number of matching links
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
 	/**

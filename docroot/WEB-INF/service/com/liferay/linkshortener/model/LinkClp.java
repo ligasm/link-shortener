@@ -69,8 +69,6 @@ public class LinkClp extends BaseModelImpl<Link> implements Link {
 
 		attributes.put("uuid", getUuid());
 		attributes.put("linkId", getLinkId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("longLink", getLongLink());
@@ -93,18 +91,6 @@ public class LinkClp extends BaseModelImpl<Link> implements Link {
 
 		if (linkId != null) {
 			setLinkId(linkId);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");
@@ -179,48 +165,6 @@ public class LinkClp extends BaseModelImpl<Link> implements Link {
 				Method method = clazz.getMethod("setLinkId", long.class);
 
 				method.invoke(_linkRemoteModel, linkId);
-			}
-			catch (Exception e) {
-				throw new UnsupportedOperationException(e);
-			}
-		}
-	}
-
-	public long getGroupId() {
-		return _groupId;
-	}
-
-	public void setGroupId(long groupId) {
-		_groupId = groupId;
-
-		if (_linkRemoteModel != null) {
-			try {
-				Class<?> clazz = _linkRemoteModel.getClass();
-
-				Method method = clazz.getMethod("setGroupId", long.class);
-
-				method.invoke(_linkRemoteModel, groupId);
-			}
-			catch (Exception e) {
-				throw new UnsupportedOperationException(e);
-			}
-		}
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
-
-		if (_linkRemoteModel != null) {
-			try {
-				Class<?> clazz = _linkRemoteModel.getClass();
-
-				Method method = clazz.getMethod("setCompanyId", long.class);
-
-				method.invoke(_linkRemoteModel, companyId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -436,8 +380,6 @@ public class LinkClp extends BaseModelImpl<Link> implements Link {
 
 		clone.setUuid(getUuid());
 		clone.setLinkId(getLinkId());
-		clone.setGroupId(getGroupId());
-		clone.setCompanyId(getCompanyId());
 		clone.setCreateDate(getCreateDate());
 		clone.setModifiedDate(getModifiedDate());
 		clone.setLongLink(getLongLink());
@@ -491,16 +433,12 @@ public class LinkClp extends BaseModelImpl<Link> implements Link {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
 		sb.append(", linkId=");
 		sb.append(getLinkId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", createDate=");
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
@@ -519,7 +457,7 @@ public class LinkClp extends BaseModelImpl<Link> implements Link {
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.linkshortener.model.Link");
@@ -532,14 +470,6 @@ public class LinkClp extends BaseModelImpl<Link> implements Link {
 		sb.append(
 			"<column><column-name>linkId</column-name><column-value><![CDATA[");
 		sb.append(getLinkId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>createDate</column-name><column-value><![CDATA[");
@@ -573,8 +503,6 @@ public class LinkClp extends BaseModelImpl<Link> implements Link {
 
 	private String _uuid;
 	private long _linkId;
-	private long _groupId;
-	private long _companyId;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private String _longLink;

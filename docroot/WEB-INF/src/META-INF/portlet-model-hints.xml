@@ -4,8 +4,6 @@
 	<model name="com.liferay.linkshortener.model.Link">
 		<field name="uuid" type="String" />
 		<field name="linkId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="longLink" type="String" />

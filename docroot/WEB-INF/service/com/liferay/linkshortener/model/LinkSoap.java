@@ -33,8 +33,6 @@ public class LinkSoap implements Serializable {
 
 		soapModel.setUuid(model.getUuid());
 		soapModel.setLinkId(model.getLinkId());
-		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setLongLink(model.getLongLink());
@@ -109,22 +107,6 @@ public class LinkSoap implements Serializable {
 		_linkId = linkId;
 	}
 
-	public long getGroupId() {
-		return _groupId;
-	}
-
-	public void setGroupId(long groupId) {
-		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
-	}
-
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -183,8 +165,6 @@ public class LinkSoap implements Serializable {
 
 	private String _uuid;
 	private long _linkId;
-	private long _groupId;
-	private long _companyId;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private String _longLink;
