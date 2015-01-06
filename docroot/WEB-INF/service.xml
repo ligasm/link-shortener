@@ -8,9 +8,6 @@
 
 		<column name="linkId" type="long" primary="true" />
 
-		<column name="groupId" type="long" />
-		<column name="companyId" type="long" />
-
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
