@@ -233,6 +233,11 @@ public class ClpSerializer {
 			return new SystemException();
 		}
 
+		if (className.equals(
+					"com.liferay.linkshortener.ShortLinkTakenException")) {
+			return new com.liferay.linkshortener.ShortLinkTakenException();
+		}
+
 		if (className.equals("com.liferay.linkshortener.NoSuchLinkException")) {
 			return new com.liferay.linkshortener.NoSuchLinkException();
 		}

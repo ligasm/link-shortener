@@ -504,6 +504,143 @@ public class LinkUtil {
 	}
 
 	/**
+	* Returns all the links where shortLink = &#63;.
+	*
+	* @param shortLink the short link
+	* @return the matching links
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.linkshortener.model.Link> findBySL(
+		java.lang.String shortLink)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findBySL(shortLink);
+	}
+
+	/**
+	* Returns a range of all the links where shortLink = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param shortLink the short link
+	* @param start the lower bound of the range of links
+	* @param end the upper bound of the range of links (not inclusive)
+	* @return the range of matching links
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.linkshortener.model.Link> findBySL(
+		java.lang.String shortLink, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findBySL(shortLink, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the links where shortLink = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param shortLink the short link
+	* @param start the lower bound of the range of links
+	* @param end the upper bound of the range of links (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching links
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.linkshortener.model.Link> findBySL(
+		java.lang.String shortLink, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findBySL(shortLink, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first link in the ordered set where shortLink = &#63;.
+	*
+	* @param shortLink the short link
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching link
+	* @throws com.liferay.linkshortener.NoSuchLinkException if a matching link could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.linkshortener.model.Link findBySL_First(
+		java.lang.String shortLink,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.linkshortener.NoSuchLinkException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findBySL_First(shortLink, orderByComparator);
+	}
+
+	/**
+	* Returns the first link in the ordered set where shortLink = &#63;.
+	*
+	* @param shortLink the short link
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching link, or <code>null</code> if a matching link could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.linkshortener.model.Link fetchBySL_First(
+		java.lang.String shortLink,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchBySL_First(shortLink, orderByComparator);
+	}
+
+	/**
+	* Returns the last link in the ordered set where shortLink = &#63;.
+	*
+	* @param shortLink the short link
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching link
+	* @throws com.liferay.linkshortener.NoSuchLinkException if a matching link could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.linkshortener.model.Link findBySL_Last(
+		java.lang.String shortLink,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.linkshortener.NoSuchLinkException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findBySL_Last(shortLink, orderByComparator);
+	}
+
+	/**
+	* Returns the last link in the ordered set where shortLink = &#63;.
+	*
+	* @param shortLink the short link
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching link, or <code>null</code> if a matching link could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.linkshortener.model.Link fetchBySL_Last(
+		java.lang.String shortLink,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchBySL_Last(shortLink, orderByComparator);
+	}
+
+	/**
+	* Returns the links before and after the current link in the ordered set where shortLink = &#63;.
+	*
+	* @param linkId the primary key of the current link
+	* @param shortLink the short link
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next link
+	* @throws com.liferay.linkshortener.NoSuchLinkException if a link with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.linkshortener.model.Link[] findBySL_PrevAndNext(
+		long linkId, java.lang.String shortLink,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.linkshortener.NoSuchLinkException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findBySL_PrevAndNext(linkId, shortLink, orderByComparator);
+	}
+
+	/**
 	* Returns all the links.
 	*
 	* @return the links
@@ -590,6 +727,17 @@ public class LinkUtil {
 	}
 
 	/**
+	* Removes all the links where shortLink = &#63; from the database.
+	*
+	* @param shortLink the short link
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeBySL(java.lang.String shortLink)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeBySL(shortLink);
+	}
+
+	/**
 	* Removes all the links from the database.
 	*
 	* @throws SystemException if a system exception occurred
@@ -634,6 +782,18 @@ public class LinkUtil {
 	public static int countByAG(boolean autoGen)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().countByAG(autoGen);
+	}
+
+	/**
+	* Returns the number of links where shortLink = &#63;.
+	*
+	* @param shortLink the short link
+	* @return the number of matching links
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countBySL(java.lang.String shortLink)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countBySL(shortLink);
 	}
 
 	/**
