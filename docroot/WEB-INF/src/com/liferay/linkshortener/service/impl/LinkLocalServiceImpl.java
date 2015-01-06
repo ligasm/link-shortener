@@ -55,8 +55,6 @@ public class LinkLocalServiceImpl extends LinkLocalServiceBaseImpl {
 		Date now = new Date();
 
 		Link newLink = linkPersistence.create(linkId);
-		newLink.setCompanyId(link.getCompanyId());
-		newLink.setGroupId(link.getGroupId());
 		newLink.setCreateDate(now);
 		newLink.setModifiedDate(now);
 		newLink.setAutoGen(link.getAutoGen());

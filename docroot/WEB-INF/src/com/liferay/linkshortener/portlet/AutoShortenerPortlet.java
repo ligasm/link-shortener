@@ -69,8 +69,6 @@ public class AutoShortenerPortlet extends MVCPortlet {
 		String longLink = ParamUtil.getString(request, LINK_PARAM);
 
 		Link link = LinkLocalServiceUtil.linkFactory();
-		link.setCompanyId(themeDisplay.getCompanyId());
-		link.setGroupId(themeDisplay.getScopeGroupId());
 		link.setLongLink(longLink);
 		link.setAutoGen(true);
 

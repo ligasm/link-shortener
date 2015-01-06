@@ -43,8 +43,6 @@ public class LinkTranslatorPortlet extends MVCPortlet {
 
 		Link link = bindObject(request);
 		link.setAutoGen(false);
-		link.setCompanyId(themeDisplay.getCompanyId());
-		link.setGroupId(themeDisplay.getScopeGroupId());
 		try {
 			LinkLocalServiceUtil.addLink(link);
 		}
