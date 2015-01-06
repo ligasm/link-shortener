@@ -31,4 +31,7 @@
 			<finder-column name="shortLink" />
 		</finder>
 	</entity>
+	<exceptions>
+		<exception>ShortLinkTaken</exception>
+	</exceptions>
 </service-builder>
