@@ -26,5 +26,9 @@
 		<finder name="AG" return-type="Collection">
 			<finder-column name="autoGen" />
 		</finder>
+
+		<finder name="SL" return-type="Collection">
+			<finder-column name="shortLink" />
+		</finder>
 	</entity>
 </service-builder>
