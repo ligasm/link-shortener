@@ -15,6 +15,7 @@
 package com.liferay.linkshortener.portlet;
 
 import com.liferay.compat.util.bridges.mvc.MVCPortlet;
+import com.liferay.linkshortener.ShortLinkTakenException;
 import com.liferay.linkshortener.model.Link;
 import com.liferay.linkshortener.service.LinkLocalServiceUtil;
 import com.liferay.portal.kernel.exception.NestableException;
@@ -23,8 +24,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.theme.ThemeDisplay;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -38,17 +37,18 @@ import static com.liferay.linkshortener.portlet.LinkTranslatorConstants.LINK_ID_
 public class LinkTranslatorPortlet extends MVCPortlet {
 
 	public void addLink(ActionRequest request, ActionResponse response) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		Link link = bindObject(request);
 		link.setAutoGen(false);
 		try {
-			LinkLocalServiceUtil.addLink(link);
+			LinkLocalServiceUtil.addLinkWithCheck(link);
 		}
 		catch (SystemException e) {
 			SessionErrors.add(request, "link-translator-unable-to-add");
 			_LOG.error("Unable to add new entity.", e);
+		} catch (ShortLinkTakenException e) {
+			SessionErrors.add(request, "link-translator-link-taken");
+			_LOG.info("Short link is already taken.");
 		}
 	}
 
@@ -73,11 +73,14 @@ public class LinkTranslatorPortlet extends MVCPortlet {
 		Link link = bindObject(request);
 		link.setAutoGen(false);
 		try {
-			LinkLocalServiceUtil.updateLink(link);
+			LinkLocalServiceUtil.updateLinkWithCheck(link);
 		}
 		catch (SystemException e) {
 			SessionErrors.add(request, "link-translator-unable-to-update");
 			_LOG.error("Unable to update link with Id " + link.getLinkId(), e);
+		} catch (ShortLinkTakenException e) {
+			SessionErrors.add(request, "link-translator-link-taken");
+			_LOG.info("Short link is already taken.");
 		}
 	}
 

@@ -18,14 +18,12 @@ import com.liferay.compat.util.bridges.mvc.MVCPortlet;
 import com.liferay.linkshortener.model.Link;
 import com.liferay.linkshortener.service.LinkLocalServiceUtil;
 import com.liferay.linkshortener.service.util.ShortURLUtil;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.exception.NestableException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.theme.ThemeDisplay;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -44,14 +42,15 @@ public class AutoShortenerPortlet extends MVCPortlet {
 	public void shortenLinkAction(
 		ActionRequest request, ActionResponse response) {
 
-		Link link = storeLongLink(request);
+		try {
+			Link link = storeLongLink(request);
 
-		if (link != null) {
 			String encodedLink = getEncodedLink(link.getLinkId());
 			response.setRenderParameter(ENCODED_LINK_PARAM, encodedLink);
 		}
-		else {
+		catch (NestableException e) {
 			SessionErrors.add(request, "auto-shortener-not-saved");
+			_LOG.error("Unable to store the new link.", e);
 		}
 	}
 
@@ -60,11 +59,8 @@ public class AutoShortenerPortlet extends MVCPortlet {
 			AUTO_SHORTEN_PREFIX + ShortURLUtil.encode(linkId);
 	}
 
-	private Link storeLongLink(PortletRequest request) {
-		Link result = null;
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	private Link storeLongLink(PortletRequest request)
+		throws NestableException {
 
 		String longLink = ParamUtil.getString(request, LINK_PARAM);
 
@@ -72,14 +68,7 @@ public class AutoShortenerPortlet extends MVCPortlet {
 		link.setLongLink(longLink);
 		link.setAutoGen(true);
 
-		try {
-			result = LinkLocalServiceUtil.addLink(link);
-		}
-		catch (SystemException e) {
-			_LOG.error("Unable to store the new link.", e);
-		}
-
-		return result;
+		return LinkLocalServiceUtil.addLinkWithCheck(link);
 	}
 
 	private static Log _LOG = LogFactoryUtil.getLog(AutoShortenerPortlet.class);
