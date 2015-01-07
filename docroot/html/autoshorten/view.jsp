@@ -20,7 +20,7 @@
 	<%= ParamUtil.getString(renderRequest, ENCODED_LINK_PARAM, "") %>
 </c:set>
 
-<liferay-ui:error key="auto-shortener-not-saved" />
+<liferay-ui:error key="auto-shortener-not-saved" message="auto-shortener-not-saved"/>
 
 <c:choose>
 	<c:when test="${not empty encodedLink}">
@@ -29,7 +29,7 @@
 	<c:otherwise>
 		<portlet:actionURL name="shortenLinkAction" var="actionUrl" />
 		<aui:form action="${actionUrl}" method="POST" name="fm">
-			<liferay-ui:error key="link-required" />
+			<liferay-ui:error key="link-required" message="link-required"/>
 			<aui:input name="<%= LINK_PARAM %>" required="true" />
 
 			<aui:button-row>

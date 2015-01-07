@@ -52,11 +52,15 @@
 				<aui:input disabled="true" label="link-id" name="linkId" />
 			</c:if>
 
-			<aui:input disabled="${formDisabled}" label="short-link" name="shortLink" prefix="${shortLinkPrefix}/" required="true" />
-			<liferay-ui:error key="short-link-required" />
+			<aui:input disabled="${formDisabled}" label="short-link" name="shortLink" prefix="${shortLinkPrefix}/">
+				<aui:validator name="required" />
+				<aui:validator name="minLength"><%=MIN_SHORT_URL%></aui:validator>
+			</aui:input>
+			<liferay-ui:error key="short-link-required" message="short-link-required"/>
+			<liferay-ui:error key="short-link-to-short" message="short-link-to-short"/>
 
 			<aui:input disabled="${formDisabled}" label="long-link" name="longLink" required="true" />
-			<liferay-ui:error key="long-link-required" />
+			<liferay-ui:error key="long-link-required" message="long-link-required"/>
 
 			<aui:input checked="<%= link == null || link.getActive() %>" disabled="${formDisabled}" label="active" name="active" type="checkbox" />
 
