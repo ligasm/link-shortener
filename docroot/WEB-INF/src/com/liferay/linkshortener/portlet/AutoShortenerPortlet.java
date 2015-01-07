@@ -45,7 +45,7 @@ public class AutoShortenerPortlet extends MVCPortlet {
 		try {
 			Link link = storeLongLink(request);
 
-			String encodedLink = getEncodedLink(link.getLinkId());
+			String encodedLink = addHostName(link.getShortLink());
 			response.setRenderParameter(ENCODED_LINK_PARAM, encodedLink);
 		}
 		catch (NestableException e) {
@@ -54,9 +54,8 @@ public class AutoShortenerPortlet extends MVCPortlet {
 		}
 	}
 
-	private String getEncodedLink(long linkId) {
-		return LINK_SHORTENER_HOSTNAME + StringPool.FORWARD_SLASH +
-			AUTO_SHORTEN_PREFIX + ShortURLUtil.encode(linkId);
+	private String addHostName(String shortLink) {
+		return LINK_SHORTENER_HOSTNAME + StringPool.FORWARD_SLASH + shortLink;
 	}
 
 	private Link storeLongLink(PortletRequest request)

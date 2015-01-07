@@ -36,6 +36,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static com.liferay.linkshortener.util.ApplicationConstants.AUTO_SHORTEN_PREFIX;
+import static com.liferay.linkshortener.util.ApplicationConstants.MIN_SHORT_URL;
+import static com.liferay.linkshortener.util.ApplicationConstants.PREFIX_SIZE;
+
 /**
  * @author Miroslav Ligas
  */
@@ -58,12 +62,12 @@ public class LinkShortenerFilter implements Filter {
 			if (request instanceof HttpServletRequest) {
 				String shortUrl = getShortURLWithoutLeadingSlash(
 					(HttpServletRequest)request);
-
-				if (isAutoShortenedURL(shortUrl)) {
-					longURL = translateAutoShortenURL(shortUrl);
-				}
-				else {
-					longURL = translateLink(shortUrl);
+				if(shortUrl.length() >= MIN_SHORT_URL) {
+					if (isAutoShortenedURL(shortUrl)) {
+						longURL = translateAutoShortenURL(shortUrl);
+					} else {
+						longURL = translateLink(shortUrl);
+					}
 				}
 			}
 		}
@@ -98,12 +102,12 @@ public class LinkShortenerFilter implements Filter {
 	}
 
 	private boolean isAutoShortenedURL(String shortUrl) {
-		return shortUrl.charAt(0) == ApplicationConstants.AUTO_SHORTEN_PREFIX;
+		return (shortUrl.substring(0,PREFIX_SIZE).equals(AUTO_SHORTEN_PREFIX));
 	}
 
 	private String translateAutoShortenURL(String shortUrl) {
 		String result = null;
-		String encodedId = shortUrl.substring(1);
+		String encodedId = shortUrl.substring(PREFIX_SIZE);
 		long decodeId = ShortURLUtil.decode(encodedId);
 		try {
 			Link link = LinkLocalServiceUtil.getLink(decodeId);

@@ -18,10 +18,15 @@ import com.liferay.linkshortener.NoSuchLinkException;
 import com.liferay.linkshortener.ShortLinkTakenException;
 import com.liferay.linkshortener.model.Link;
 import com.liferay.linkshortener.service.base.LinkLocalServiceBaseImpl;
+import com.liferay.linkshortener.service.util.ShortURLUtil;
+import com.liferay.linkshortener.util.ApplicationConstants;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Date;
 import java.util.List;
+
+import static com.liferay.linkshortener.util.ApplicationConstants.AUTO_SHORTEN_PREFIX;
 
 /**
  * The implementation of the link local service. <p/>
@@ -52,8 +57,9 @@ public class LinkLocalServiceImpl extends LinkLocalServiceBaseImpl {
 	public Link addLinkWithCheck(Link link)
 		throws ShortLinkTakenException, SystemException {
 
-		if (isShortLinkNotUnique(link.getShortLink())) {
-			throw new ShortLinkTakenException(link.getShortLink());
+		if (!link.isAutoGen() && isShortLinkNotUnique(link.getShortLink())) {
+			throw new ShortLinkTakenException("Link '" + link.getShortLink()
+				+ "' is not unique");
 		}
 
 		long linkId = counterLocalService.increment(Link.class.getName());
@@ -67,7 +73,22 @@ public class LinkLocalServiceImpl extends LinkLocalServiceBaseImpl {
 		newLink.setLongLink(link.getLongLink());
 		newLink.setActive(true);
 
-		return super.addLink(newLink);
+		newLink = super.addLink(newLink);
+
+		if(link.isAutoGen()){
+			String shortLink =
+				AUTO_SHORTEN_PREFIX + ShortURLUtil.encode(linkId);
+
+			if (isShortLinkNotUnique(shortLink)) {
+				throw new ShortLinkTakenException("Link '" + shortLink
+					+ "' is not unique");
+			} else {
+				newLink.setShortLink(shortLink);
+				newLink = super.updateLink(newLink);
+			}
+		}
+
+		return newLink;
 	}
 
 	/**
@@ -135,7 +156,7 @@ public class LinkLocalServiceImpl extends LinkLocalServiceBaseImpl {
 
 	private boolean isShortLinkNotUnique(String shortLink)
 		throws SystemException {
-		return linkPersistence.findBySL(shortLink).isEmpty();
+		return !linkPersistence.findBySL(shortLink).isEmpty();
 	}
 
 
