@@ -141,17 +141,20 @@ public class LinkLocalServiceImpl extends LinkLocalServiceBaseImpl {
 	public Link updateLinkWithCheck(Link link)
 		throws ShortLinkTakenException, SystemException {
 
-		if (isShortLinkNotUnique(link.getShortLink())) {
-			throw new ShortLinkTakenException(link.getShortLink());
+		Link originalLink = fetchLink(link.getLinkId());
+
+		if(!originalLink.getShortLink().equals(link.getShortLink())) {
+			if (isShortLinkNotUnique(link.getShortLink())) {
+				throw new ShortLinkTakenException(link.getShortLink());
+			}
 		}
 
-		Link updatedLink = fetchLink(link.getLinkId());
-		updatedLink.setShortLink(link.getShortLink());
-		updatedLink.setLongLink(link.getLongLink());
-		updatedLink.setActive(link.getActive());
-		updatedLink.setModifiedDate(new Date());
+		originalLink.setShortLink(link.getShortLink());
+		originalLink.setLongLink(link.getLongLink());
+		originalLink.setActive(link.getActive());
+		originalLink.setModifiedDate(new Date());
 
-		return super.updateLink(updatedLink);
+		return super.updateLink(originalLink);
 	}
 
 	private boolean isShortLinkNotUnique(String shortLink)
