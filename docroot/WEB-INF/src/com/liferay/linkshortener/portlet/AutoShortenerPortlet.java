@@ -17,7 +17,6 @@ package com.liferay.linkshortener.portlet;
 import com.liferay.compat.util.bridges.mvc.MVCPortlet;
 import com.liferay.linkshortener.model.Link;
 import com.liferay.linkshortener.service.LinkLocalServiceUtil;
-import com.liferay.linkshortener.service.util.ShortURLUtil;
 import com.liferay.portal.kernel.exception.NestableException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,9 +26,7 @@ import com.liferay.portal.kernel.util.StringPool;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletRequest;
 
-import static com.liferay.linkshortener.portlet.AutoShortenerConstants.AUTO_SHORTEN_PREFIX;
 import static com.liferay.linkshortener.portlet.AutoShortenerConstants.ENCODED_LINK_PARAM;
 import static com.liferay.linkshortener.portlet.AutoShortenerConstants.LINK_PARAM;
 import static com.liferay.linkshortener.util.ApplicationPropsValues.LINK_SHORTENER_HOSTNAME;
@@ -42,11 +39,15 @@ public class AutoShortenerPortlet extends MVCPortlet {
 	public void shortenLinkAction(
 		ActionRequest request, ActionResponse response) {
 
-		try {
-			Link link = storeLongLink(request);
+		String longLink = getAndValidateData(request);
 
-			String encodedLink = addHostName(link.getShortLink());
-			response.setRenderParameter(ENCODED_LINK_PARAM, encodedLink);
+		try {
+			if (longLink != null) {
+				Link link = storeLongLink(longLink);
+
+				String encodedLink = addHostName(link.getShortLink());
+				response.setRenderParameter(ENCODED_LINK_PARAM, encodedLink);
+			}
 		}
 		catch (NestableException e) {
 			SessionErrors.add(request, "auto-shortener-not-saved");
@@ -58,11 +59,18 @@ public class AutoShortenerPortlet extends MVCPortlet {
 		return LINK_SHORTENER_HOSTNAME + StringPool.FORWARD_SLASH + shortLink;
 	}
 
-	private Link storeLongLink(PortletRequest request)
-		throws NestableException {
+	private String getAndValidateData(ActionRequest request) {
+		String result = ParamUtil.getString(
+			request, LINK_PARAM, StringPool.BLANK).trim();
 
-		String longLink = ParamUtil.getString(request, LINK_PARAM);
+		if (result.equals(StringPool.BLANK)) {
+			SessionErrors.add(request, "link-required");
+		}
 
+		return result;
+	}
+
+	private Link storeLongLink(String longLink) throws NestableException {
 		Link link = LinkLocalServiceUtil.linkFactory();
 		link.setLongLink(longLink);
 		link.setAutoGen(true);

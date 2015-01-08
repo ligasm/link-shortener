@@ -38,17 +38,18 @@ public class LinkTranslatorPortlet extends MVCPortlet {
 
 	public void addLink(ActionRequest request, ActionResponse response) {
 
-		Link link = bindObject(request);
-		link.setAutoGen(false);
-		try {
-			LinkLocalServiceUtil.addLinkWithCheck(link);
-		}
-		catch (SystemException e) {
-			SessionErrors.add(request, "link-translator-unable-to-add");
-			_LOG.error("Unable to add new entity.", e);
-		} catch (ShortLinkTakenException e) {
-			SessionErrors.add(request, "link-translator-link-taken");
-			_LOG.info("Short link is already taken.");
+		Link link = bindAndValidateObject(request);
+
+		if (SessionErrors.isEmpty(request)) {
+			try {
+				LinkLocalServiceUtil.addLinkWithCheck(link);
+			} catch (SystemException e) {
+				SessionErrors.add(request, "link-translator-unable-to-add");
+				_LOG.error("Unable to add new entity.", e);
+			} catch (ShortLinkTakenException e) {
+				SessionErrors.add(request, "link-translator-link-taken");
+				_LOG.info("Short link is already taken.");
+			}
 		}
 	}
 
@@ -70,21 +71,23 @@ public class LinkTranslatorPortlet extends MVCPortlet {
 	}
 
 	public void editLink(ActionRequest request, ActionResponse response) {
-		Link link = bindObject(request);
-		link.setAutoGen(false);
-		try {
-			LinkLocalServiceUtil.updateLinkWithCheck(link);
-		}
-		catch (SystemException e) {
-			SessionErrors.add(request, "link-translator-unable-to-update");
-			_LOG.error("Unable to update link with Id " + link.getLinkId(), e);
-		} catch (ShortLinkTakenException e) {
-			SessionErrors.add(request, "link-translator-link-taken");
-			_LOG.info("Short link is already taken.");
+		Link link = bindAndValidateObject(request);
+
+		if (SessionErrors.isEmpty(request)) {
+			try {
+				LinkLocalServiceUtil.updateLinkWithCheck(link);
+			} catch (SystemException e) {
+				SessionErrors.add(request, "link-translator-unable-to-update");
+				_LOG.error("Unable to update link with Id " +
+					link.getLinkId(), e);
+			} catch (ShortLinkTakenException e) {
+				SessionErrors.add(request, "link-translator-link-taken");
+				_LOG.info("Short link is already taken.");
+			}
 		}
 	}
 
-	private Link bindObject(PortletRequest request) {
+	private Link bindAndValidateObject(PortletRequest request) {
 		Link result = LinkLocalServiceUtil.linkFactory();
 
 		long linkId = ParamUtil.getLong(request, "linkId");
@@ -96,6 +99,9 @@ public class LinkTranslatorPortlet extends MVCPortlet {
 		result.setLongLink(longLink);
 		result.setShortLink(shortLink);
 		result.setActive(active);
+		result.setAutoGen(false);
+
+		LinkValidator.getInstance().validate(request, result);
 
 		return result;
 	}
