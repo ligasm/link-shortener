@@ -270,7 +270,8 @@ public class LinkLocalServiceUtil {
 	}
 
 	/**
-	* Adds the link to the database. Also notifies the appropriate model
+	* Method checks if the short link is already used. If the link is not used
+	* it adds a new link to database. Also notifies the appropriate model
 	* listeners.
 	*
 	* @param link the link
@@ -326,8 +327,9 @@ public class LinkLocalServiceUtil {
 	}
 
 	/**
-	* Updates the link in the database or adds it if it does not yet exist.
-	* Also notifies the appropriate model listeners.
+	* Method checks if the short link is already taken if it was modified. If
+	* the link is free it updates the entry. Also notifies the appropriate
+	* model listeners.
 	*
 	* @param link the link
 	* @return the link that was updated

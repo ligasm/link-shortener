@@ -62,6 +62,107 @@ public class LinkServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	/**
+	* Method checks if the short link is already used. If the link is not used
+	* it adds a new link to database. Also notifies the appropriate model
+	* listeners.
+	*
+	* @param link the link
+	* @return the link that was added
+	* @throws com.liferay.portal.kernel.exception.SystemException if a system exception occurred
+	*/
+	public static com.liferay.linkshortener.model.Link addLink(
+		com.liferay.linkshortener.model.Link link)
+		throws com.liferay.linkshortener.ShortLinkTakenException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().addLink(link);
+	}
+
+	/**
+	* Deletes the link with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param linkId the primary key of the link
+	* @return the link that was removed
+	* @throws PortalException if a link with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.linkshortener.model.Link deleteLink(long linkId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().deleteLink(linkId);
+	}
+
+	/**
+	* Returns the link with the primary key.
+	*
+	* @param linkId the primary key of the link
+	* @return the link
+	* @throws PortalException if a link with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.linkshortener.model.Link getLink(long linkId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getLink(linkId);
+	}
+
+	/**
+	* Method loads links auto-generated or explicitly created links from
+	* database. Method supports paging.
+	*
+	* @param autoGen specifies what kind of links should be loaded
+	* @param start the lower bound of the range of links
+	* @param end the upper bound of the range of links (not inclusive)
+	* @return the range of matching links
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.linkshortener.model.Link> getLinksByAutoGen(
+		boolean autoGen, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getLinksByAutoGen(autoGen, start, end);
+	}
+
+	/**
+	* Method returns the link which short link matches the provided value.
+	*
+	* @param shortLink the short link
+	* @return the matching link
+	* @throws com.liferay.linkshortener.NoSuchLinkException if a matching link
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.linkshortener.model.Link getLinksByShortLink(
+		java.lang.String shortLink)
+		throws com.liferay.linkshortener.NoSuchLinkException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getLinksByShortLink(shortLink);
+	}
+
+	/**
+	* Factory method for a new Link object.
+	*
+	* @return new object
+	*/
+	public static com.liferay.linkshortener.model.Link linkFactory() {
+		return getService().linkFactory();
+	}
+
+	/**
+	* Method checks if the short link is already taken if it was modified. If
+	* the link is free it updates the entry. Also notifies the appropriate
+	* model listeners.
+	*
+	* @param link the link
+	* @return the link that was updated
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.linkshortener.model.Link updateLink(
+		com.liferay.linkshortener.model.Link link)
+		throws com.liferay.linkshortener.ShortLinkTakenException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().updateLink(link);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

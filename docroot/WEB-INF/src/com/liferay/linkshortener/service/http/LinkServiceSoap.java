@@ -14,6 +14,13 @@
 
 package com.liferay.linkshortener.service.http;
 
+import com.liferay.linkshortener.service.LinkServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * <p>
  * This class provides a SOAP utility for the
@@ -58,4 +65,166 @@ package com.liferay.linkshortener.service.http;
  * @generated
  */
 public class LinkServiceSoap {
+	/**
+	* Method checks if the short link is already used. If the link is not used
+	* it adds a new link to database. Also notifies the appropriate model
+	* listeners.
+	*
+	* @param link the link
+	* @return the link that was added
+	* @throws com.liferay.portal.kernel.exception.SystemException if a system exception occurred
+	*/
+	public static com.liferay.linkshortener.model.LinkSoap addLink(
+		com.liferay.linkshortener.model.LinkSoap link)
+		throws RemoteException {
+		try {
+			com.liferay.linkshortener.model.Link returnValue = LinkServiceUtil.addLink(com.liferay.linkshortener.model.impl.LinkModelImpl.toModel(
+						link));
+
+			return com.liferay.linkshortener.model.LinkSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Deletes the link with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param linkId the primary key of the link
+	* @return the link that was removed
+	* @throws PortalException if a link with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.linkshortener.model.LinkSoap deleteLink(
+		long linkId) throws RemoteException {
+		try {
+			com.liferay.linkshortener.model.Link returnValue = LinkServiceUtil.deleteLink(linkId);
+
+			return com.liferay.linkshortener.model.LinkSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Returns the link with the primary key.
+	*
+	* @param linkId the primary key of the link
+	* @return the link
+	* @throws PortalException if a link with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.linkshortener.model.LinkSoap getLink(long linkId)
+		throws RemoteException {
+		try {
+			com.liferay.linkshortener.model.Link returnValue = LinkServiceUtil.getLink(linkId);
+
+			return com.liferay.linkshortener.model.LinkSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Method loads links auto-generated or explicitly created links from
+	* database. Method supports paging.
+	*
+	* @param autoGen specifies what kind of links should be loaded
+	* @param start the lower bound of the range of links
+	* @param end the upper bound of the range of links (not inclusive)
+	* @return the range of matching links
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.linkshortener.model.LinkSoap[] getLinksByAutoGen(
+		boolean autoGen, int start, int end) throws RemoteException {
+		try {
+			java.util.List<com.liferay.linkshortener.model.Link> returnValue = LinkServiceUtil.getLinksByAutoGen(autoGen,
+					start, end);
+
+			return com.liferay.linkshortener.model.LinkSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Method returns the link which short link matches the provided value.
+	*
+	* @param shortLink the short link
+	* @return the matching link
+	* @throws com.liferay.linkshortener.NoSuchLinkException if a matching link
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.linkshortener.model.LinkSoap getLinksByShortLink(
+		java.lang.String shortLink) throws RemoteException {
+		try {
+			com.liferay.linkshortener.model.Link returnValue = LinkServiceUtil.getLinksByShortLink(shortLink);
+
+			return com.liferay.linkshortener.model.LinkSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Factory method for a new Link object.
+	*
+	* @return new object
+	*/
+	public static com.liferay.linkshortener.model.LinkSoap linkFactory()
+		throws RemoteException {
+		try {
+			com.liferay.linkshortener.model.Link returnValue = LinkServiceUtil.linkFactory();
+
+			return com.liferay.linkshortener.model.LinkSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Method checks if the short link is already taken if it was modified. If
+	* the link is free it updates the entry. Also notifies the appropriate
+	* model listeners.
+	*
+	* @param link the link
+	* @return the link that was updated
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.linkshortener.model.LinkSoap updateLink(
+		com.liferay.linkshortener.model.LinkSoap link)
+		throws RemoteException {
+		try {
+			com.liferay.linkshortener.model.Link returnValue = LinkServiceUtil.updateLink(com.liferay.linkshortener.model.impl.LinkModelImpl.toModel(
+						link));
+
+			return com.liferay.linkshortener.model.LinkSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(LinkServiceSoap.class);
 }
