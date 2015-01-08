@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.linkshortener.portlet;
 
 import com.liferay.linkshortener.model.Link;
@@ -32,15 +33,16 @@ public class LinkValidator {
 	public void validate(PortletRequest request, Link link) {
 		String shortLink = link.getShortLink();
 
-		if (shortLink == null || shortLink.trim().equals(StringPool.BLANK)) {
+		if ((shortLink == null) || shortLink.trim().equals(StringPool.BLANK)) {
 			SessionErrors.add(request, "short-link-required");
-		} else if (shortLink.length() < ApplicationConstants.MIN_SHORT_URL) {
+		}
+		else if (shortLink.length() < ApplicationConstants.MIN_SHORT_URL) {
 			SessionErrors.add(request, "short-link-to-short");
 		}
 
 		String longLink = link.getLongLink();
 
-		if (longLink == null || longLink.trim().equals(StringPool.BLANK)) {
+		if ((longLink == null) || longLink.trim().equals(StringPool.BLANK)) {
 			SessionErrors.add(request, "long-link-required");
 		}
 	}

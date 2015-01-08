@@ -20,11 +20,12 @@ package com.liferay.linkshortener.util;
 public class ApplicationConstants {
 
 	public static final String AUTO_SHORTEN_PREFIX = "OAU";
-	public static final int PREFIX_SIZE = AUTO_SHORTEN_PREFIX.length();
-
-	public static final short MIN_SHORT_URL = 4;
 
 	public static final String LINK_SHORTENER_HOSTNAME =
 		"link.shortener.hostname";
+
+	public static final short MIN_SHORT_URL = 4;
+
+	public static final int PREFIX_SIZE = AUTO_SHORTEN_PREFIX.length();
 
 }

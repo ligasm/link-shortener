@@ -19,9 +19,7 @@ import com.liferay.linkshortener.ShortLinkTakenException;
 import com.liferay.linkshortener.model.Link;
 import com.liferay.linkshortener.service.base.LinkLocalServiceBaseImpl;
 import com.liferay.linkshortener.service.util.ShortURLUtil;
-import com.liferay.linkshortener.util.ApplicationConstants;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -58,8 +56,8 @@ public class LinkLocalServiceImpl extends LinkLocalServiceBaseImpl {
 		throws ShortLinkTakenException, SystemException {
 
 		if (!link.isAutoGen() && isShortLinkNotUnique(link.getShortLink())) {
-			throw new ShortLinkTakenException("Link '" + link.getShortLink()
-				+ "' is not unique");
+			throw new ShortLinkTakenException(
+				"Link '" + link.getShortLink() +"' is not unique");
 		}
 
 		long linkId = counterLocalService.increment(Link.class.getName());
@@ -75,14 +73,15 @@ public class LinkLocalServiceImpl extends LinkLocalServiceBaseImpl {
 
 		newLink = super.addLink(newLink);
 
-		if(link.isAutoGen()){
+		if (link.isAutoGen()) {
 			String shortLink =
 				AUTO_SHORTEN_PREFIX + ShortURLUtil.encode(linkId);
 
 			if (isShortLinkNotUnique(shortLink)) {
-				throw new ShortLinkTakenException("Link '" + shortLink
-					+ "' is not unique");
-			} else {
+				throw new ShortLinkTakenException(
+					"Link '" + shortLink +"' is not unique");
+			}
+			else {
 				newLink.setShortLink(shortLink);
 				newLink = super.updateLink(newLink);
 			}
@@ -151,13 +150,14 @@ public class LinkLocalServiceImpl extends LinkLocalServiceBaseImpl {
 		updatedLink.setLongLink(link.getLongLink());
 		updatedLink.setActive(link.getActive());
 		updatedLink.setModifiedDate(new Date());
+
 		return super.updateLink(updatedLink);
 	}
 
 	private boolean isShortLinkNotUnique(String shortLink)
 		throws SystemException {
+
 		return !linkPersistence.findBySL(shortLink).isEmpty();
 	}
-
 
 }

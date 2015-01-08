@@ -18,7 +18,6 @@ import com.liferay.linkshortener.NoSuchLinkException;
 import com.liferay.linkshortener.model.Link;
 import com.liferay.linkshortener.service.LinkLocalServiceUtil;
 import com.liferay.linkshortener.service.util.ShortURLUtil;
-import com.liferay.linkshortener.util.ApplicationConstants;
 import com.liferay.linkshortener.util.ApplicationPropsValues;
 import com.liferay.portal.kernel.exception.NestableException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -62,10 +61,12 @@ public class LinkShortenerFilter implements Filter {
 			if (request instanceof HttpServletRequest) {
 				String shortUrl = getShortURLWithoutLeadingSlash(
 					(HttpServletRequest)request);
-				if(shortUrl.length() >= MIN_SHORT_URL) {
+
+				if (shortUrl.length() >= MIN_SHORT_URL) {
 					if (isAutoShortenedURL(shortUrl)) {
 						longURL = translateAutoShortenURL(shortUrl);
-					} else {
+					}
+					else {
 						longURL = translateLink(shortUrl);
 					}
 				}
@@ -102,7 +103,7 @@ public class LinkShortenerFilter implements Filter {
 	}
 
 	private boolean isAutoShortenedURL(String shortUrl) {
-		return (shortUrl.substring(0,PREFIX_SIZE).equals(AUTO_SHORTEN_PREFIX));
+		return (shortUrl.substring(0, PREFIX_SIZE).equals(AUTO_SHORTEN_PREFIX));
 	}
 
 	private String translateAutoShortenURL(String shortUrl) {
