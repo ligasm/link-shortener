@@ -31,12 +31,27 @@
 %>
 
 <c:set value="false" var="formDisabled" />
+
+<liferay-ui:error key="link-translator-unable-to-add" message="link-translator-unable-to-add"/>
+<liferay-ui:error key="link-translator-unable-to-delete" message="link-translator-unable-to-delete"/>
+<liferay-ui:error key="link-translator-wrong-entry-id" message="link-translator-wrong-entry-id"/>
+<liferay-ui:error key="link-translator-unable-to-update" message="link-translator-unable-to-update"/>
+<liferay-ui:error key="link-translator-link-taken" message="link-translator-link-taken"/>
+
 <c:choose>
 	<c:when test="${viewEditDetail eq 'edit'}">
-		<portlet:actionURL name="editLink" var="actionURL" />
+		<portlet:actionURL name="editLink" var="actionURL" >
+			<portlet:param name="mvcPath" value="/html/translator/view_add_edit.jsp" />
+			<portlet:param name="<%= VIEW_EDIT_DETAIL_PARAM %>" value="edit" />
+			<portlet:param name="redirect" value="${redirect}" />
+		</portlet:actionURL>
 	</c:when>
 	<c:when test="${viewEditDetail eq 'add'}">
-		<portlet:actionURL name="addLink" var="actionURL" />
+		<portlet:actionURL name="addLink" var="actionURL" >
+			<portlet:param name="mvcPath" value="/html/translator/view_add_edit.jsp" />
+			<portlet:param name="<%= VIEW_EDIT_DETAIL_PARAM %>" value="add" />
+			<portlet:param name="redirect" value="${redirect}" />
+		</portlet:actionURL>
 	</c:when>
 	<c:otherwise>
 		<c:set value="true" var="formDisabled" />

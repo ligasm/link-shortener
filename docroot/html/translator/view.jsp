@@ -22,12 +22,6 @@
 
 <portlet:renderURL var="redirect" />
 
-<liferay-ui:error key="link-translator-unable-to-add" message="link-translator-unable-to-add"/>
-<liferay-ui:error key="link-translator-unable-to-delete" message="link-translator-unable-to-delete"/>
-<liferay-ui:error key="link-translator-wrong-entry-id" message="link-translator-wrong-entry-id"/>
-<liferay-ui:error key="link-translator-unable-to-update" message="link-translator-unable-to-update"/>
-<liferay-ui:error key="link-translator-link-taken" message="link-translator-link-taken"/>
-
 <div class="link-shortener-content">
 
 	<aui:button-row>
