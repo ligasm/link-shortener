@@ -16,7 +16,7 @@ package com.liferay.linkshortener.portlet;
 
 import com.liferay.compat.util.bridges.mvc.MVCPortlet;
 import com.liferay.linkshortener.model.Link;
-import com.liferay.linkshortener.service.LinkLocalServiceUtil;
+import com.liferay.linkshortener.service.LinkServiceUtil;
 import com.liferay.portal.kernel.exception.NestableException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -71,11 +71,11 @@ public class AutoShortenerPortlet extends MVCPortlet {
 	}
 
 	private Link storeLongLink(String longLink) throws NestableException {
-		Link link = LinkLocalServiceUtil.linkFactory();
+		Link link = LinkServiceUtil.linkFactory();
 		link.setLongLink(longLink);
 		link.setAutoGen(true);
 
-		return LinkLocalServiceUtil.addLinkWithCheck(link);
+		return LinkServiceUtil.addLink(link);
 	}
 
 	private static Log _LOG = LogFactoryUtil.getLog(AutoShortenerPortlet.class);

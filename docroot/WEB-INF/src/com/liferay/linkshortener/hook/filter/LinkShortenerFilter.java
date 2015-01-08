@@ -16,7 +16,7 @@ package com.liferay.linkshortener.hook.filter;
 
 import com.liferay.linkshortener.NoSuchLinkException;
 import com.liferay.linkshortener.model.Link;
-import com.liferay.linkshortener.service.LinkLocalServiceUtil;
+import com.liferay.linkshortener.service.LinkServiceUtil;
 import com.liferay.linkshortener.service.util.ShortURLUtil;
 import com.liferay.linkshortener.util.ApplicationPropsValues;
 import com.liferay.portal.kernel.exception.NestableException;
@@ -111,7 +111,7 @@ public class LinkShortenerFilter implements Filter {
 		String encodedId = shortUrl.substring(PREFIX_SIZE);
 		long decodeId = ShortURLUtil.decode(encodedId);
 		try {
-			Link link = LinkLocalServiceUtil.getLink(decodeId);
+			Link link = LinkServiceUtil.getLink(decodeId);
 			result = link.getLongLink();
 		}
 		catch (NestableException e) {
@@ -124,7 +124,7 @@ public class LinkShortenerFilter implements Filter {
 	private String translateLink(String shortUrl) {
 		String result = null;
 		try {
-			Link link = LinkLocalServiceUtil.getLinksByShortLink(shortUrl);
+			Link link = LinkServiceUtil.getLinksByShortLink(shortUrl);
 			result = link.getLongLink();
 		}
 		catch (NoSuchLinkException e) {

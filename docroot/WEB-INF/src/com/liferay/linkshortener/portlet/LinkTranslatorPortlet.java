@@ -17,7 +17,7 @@ package com.liferay.linkshortener.portlet;
 import com.liferay.compat.util.bridges.mvc.MVCPortlet;
 import com.liferay.linkshortener.ShortLinkTakenException;
 import com.liferay.linkshortener.model.Link;
-import com.liferay.linkshortener.service.LinkLocalServiceUtil;
+import com.liferay.linkshortener.service.LinkServiceUtil;
 import com.liferay.portal.kernel.exception.NestableException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -42,7 +42,7 @@ public class LinkTranslatorPortlet extends MVCPortlet {
 
 		if (SessionErrors.isEmpty(request)) {
 			try {
-				LinkLocalServiceUtil.addLinkWithCheck(link);
+				LinkServiceUtil.addLink(link);
 			}
 			catch (SystemException e) {
 				SessionErrors.add(request, "link-translator-unable-to-add");
@@ -60,7 +60,7 @@ public class LinkTranslatorPortlet extends MVCPortlet {
 
 		if (linkId != 0) {
 			try {
-				LinkLocalServiceUtil.deleteLink(linkId);
+				LinkServiceUtil.deleteLink(linkId);
 			}
 			catch (NestableException e) {
 				SessionErrors.add(request, "link-translator-unable-to-delete");
@@ -77,7 +77,7 @@ public class LinkTranslatorPortlet extends MVCPortlet {
 
 		if (SessionErrors.isEmpty(request)) {
 			try {
-				LinkLocalServiceUtil.updateLinkWithCheck(link);
+				LinkServiceUtil.updateLink(link);
 			}
 			catch (SystemException e) {
 				SessionErrors.add(request, "link-translator-unable-to-update");
@@ -92,7 +92,7 @@ public class LinkTranslatorPortlet extends MVCPortlet {
 	}
 
 	private Link bindAndValidateObject(PortletRequest request) {
-		Link result = LinkLocalServiceUtil.linkFactory();
+		Link result = LinkServiceUtil.linkFactory();
 
 		long linkId = ParamUtil.getLong(request, "linkId");
 		String shortLink = ParamUtil.getString(request, "shortLink");
