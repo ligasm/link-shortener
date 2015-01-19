@@ -19,7 +19,20 @@ import com.liferay.linkshortener.ShortLinkTakenException;
 import com.liferay.linkshortener.model.Link;
 import com.liferay.linkshortener.service.base.LinkLocalServiceBaseImpl;
 import com.liferay.linkshortener.service.util.ShortURLUtil;
+import com.liferay.portal.kernel.dao.orm.ORMException;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.CalendarUtil;
+import com.liferay.util.dao.orm.CustomSQLUtil;
+
+import java.sql.Timestamp;
 
 import java.util.Date;
 import java.util.List;
@@ -92,6 +105,39 @@ public class LinkLocalServiceImpl extends LinkLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Deletes all the Links that were not modified after the specified date.
+	 *
+	 * @param olderThen boundary date for the deletion.
+	 */
+	@Transactional(
+		isolation = Isolation.READ_COMMITTED,
+		propagation = Propagation.REQUIRES_NEW)
+	public void deleteOldRecords(Date olderThen) {
+
+		try {
+			Session session = linkPersistence.openSession();
+
+			String sql = CustomSQLUtil.get(_DELETE_LINKS);
+
+			SQLQuery sqlQuery = session.createSQLQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(sqlQuery);
+
+			Timestamp olderThenTS = CalendarUtil.getTimestamp(olderThen);
+
+			qPos.add(olderThenTS);
+
+			sqlQuery.executeUpdate();
+
+			linkPersistence.closeSession(session);
+
+		}
+		catch (ORMException orme) {
+			_LOG.error("Unable to remove old Links.", orme);
+		}
+	}
+
+	/**
 	 * Method loads links auto-generated or explicitly created links from
 	 * database. Method supports paging.
 	 *
@@ -145,7 +191,7 @@ public class LinkLocalServiceImpl extends LinkLocalServiceBaseImpl {
 
 		Link originalLink = fetchLink(link.getLinkId());
 
-		if(!originalLink.getShortLink().equals(link.getShortLink())) {
+		if (!originalLink.getShortLink().equals(link.getShortLink())) {
 			if (isShortLinkNotUnique(link.getShortLink())) {
 				throw new ShortLinkTakenException(link.getShortLink());
 			}
@@ -164,5 +210,11 @@ public class LinkLocalServiceImpl extends LinkLocalServiceBaseImpl {
 
 		return !linkPersistence.findBySL(shortLink).isEmpty();
 	}
+
+	private static final String _DELETE_LINKS =
+		LinkLocalServiceImpl.class.getName() +
+			".deleteLinks";
+
+	private static Log _LOG = LogFactoryUtil.getLog(LinkLocalServiceImpl.class);
 
 }
