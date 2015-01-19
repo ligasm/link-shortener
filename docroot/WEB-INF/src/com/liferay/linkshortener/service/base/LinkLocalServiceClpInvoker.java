@@ -118,21 +118,25 @@ public class LinkLocalServiceClpInvoker {
 				"com.liferay.linkshortener.model.Link"
 			};
 
-		_methodName45 = "getLinksByAutoGen";
+		_methodName45 = "deleteOldRecords";
 
-		_methodParameterTypes45 = new String[] { "boolean", "int", "int" };
+		_methodParameterTypes45 = new String[] { "java.util.Date" };
 
-		_methodName46 = "getLinksByShortLink";
+		_methodName46 = "getLinksByAutoGen";
 
-		_methodParameterTypes46 = new String[] { "java.lang.String" };
+		_methodParameterTypes46 = new String[] { "boolean", "int", "int" };
 
-		_methodName47 = "linkFactory";
+		_methodName47 = "getLinksByShortLink";
 
-		_methodParameterTypes47 = new String[] {  };
+		_methodParameterTypes47 = new String[] { "java.lang.String" };
 
-		_methodName48 = "updateLinkWithCheck";
+		_methodName48 = "linkFactory";
 
-		_methodParameterTypes48 = new String[] {
+		_methodParameterTypes48 = new String[] {  };
+
+		_methodName49 = "updateLinkWithCheck";
+
+		_methodParameterTypes49 = new String[] {
 				"com.liferay.linkshortener.model.Link"
 			};
 	}
@@ -245,23 +249,30 @@ public class LinkLocalServiceClpInvoker {
 
 		if (_methodName45.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes45, parameterTypes)) {
+			LinkLocalServiceUtil.deleteOldRecords((java.util.Date)arguments[0]);
+
+			return null;
+		}
+
+		if (_methodName46.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes46, parameterTypes)) {
 			return LinkLocalServiceUtil.getLinksByAutoGen(((Boolean)arguments[0]).booleanValue(),
 				((Integer)arguments[1]).intValue(),
 				((Integer)arguments[2]).intValue());
 		}
 
-		if (_methodName46.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes46, parameterTypes)) {
-			return LinkLocalServiceUtil.getLinksByShortLink((java.lang.String)arguments[0]);
-		}
-
 		if (_methodName47.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes47, parameterTypes)) {
-			return LinkLocalServiceUtil.linkFactory();
+			return LinkLocalServiceUtil.getLinksByShortLink((java.lang.String)arguments[0]);
 		}
 
 		if (_methodName48.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes48, parameterTypes)) {
+			return LinkLocalServiceUtil.linkFactory();
+		}
+
+		if (_methodName49.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes49, parameterTypes)) {
 			return LinkLocalServiceUtil.updateLinkWithCheck((com.liferay.linkshortener.model.Link)arguments[0]);
 		}
 
@@ -314,4 +325,6 @@ public class LinkLocalServiceClpInvoker {
 	private String[] _methodParameterTypes47;
 	private String _methodName48;
 	private String[] _methodParameterTypes48;
+	private String _methodName49;
+	private String[] _methodParameterTypes49;
 }

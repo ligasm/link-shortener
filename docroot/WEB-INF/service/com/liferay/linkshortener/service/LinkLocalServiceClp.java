@@ -118,21 +118,25 @@ public class LinkLocalServiceClp implements LinkLocalService {
 				"com.liferay.linkshortener.model.Link"
 			};
 
-		_methodName20 = "getLinksByAutoGen";
+		_methodName20 = "deleteOldRecords";
 
-		_methodParameterTypes20 = new String[] { "boolean", "int", "int" };
+		_methodParameterTypes20 = new String[] { "java.util.Date" };
 
-		_methodName21 = "getLinksByShortLink";
+		_methodName21 = "getLinksByAutoGen";
 
-		_methodParameterTypes21 = new String[] { "java.lang.String" };
+		_methodParameterTypes21 = new String[] { "boolean", "int", "int" };
 
-		_methodName22 = "linkFactory";
+		_methodName22 = "getLinksByShortLink";
 
-		_methodParameterTypes22 = new String[] {  };
+		_methodParameterTypes22 = new String[] { "java.lang.String" };
 
-		_methodName23 = "updateLinkWithCheck";
+		_methodName23 = "linkFactory";
 
-		_methodParameterTypes23 = new String[] {
+		_methodParameterTypes23 = new String[] {  };
+
+		_methodName24 = "updateLinkWithCheck";
+
+		_methodParameterTypes24 = new String[] {
 				"com.liferay.linkshortener.model.Link"
 			};
 	}
@@ -693,14 +697,33 @@ public class LinkLocalServiceClp implements LinkLocalService {
 		return (com.liferay.linkshortener.model.Link)ClpSerializer.translateOutput(returnObj);
 	}
 
+	public void deleteOldRecords(java.util.Date olderThen) {
+		try {
+			_invokableLocalService.invokeMethod(_methodName20,
+				_methodParameterTypes20,
+				new Object[] { ClpSerializer.translateInput(olderThen) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
 	public java.util.List<com.liferay.linkshortener.model.Link> getLinksByAutoGen(
 		boolean autoGen, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName20,
-					_methodParameterTypes20,
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21,
 					new Object[] { autoGen, start, end });
 		}
 		catch (Throwable t) {
@@ -729,8 +752,8 @@ public class LinkLocalServiceClp implements LinkLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName21,
-					_methodParameterTypes21,
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22,
 					new Object[] { ClpSerializer.translateInput(shortLink) });
 		}
 		catch (Throwable t) {
@@ -760,8 +783,8 @@ public class LinkLocalServiceClp implements LinkLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName22,
-					_methodParameterTypes22, new Object[] {  });
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -785,8 +808,8 @@ public class LinkLocalServiceClp implements LinkLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName23,
-					_methodParameterTypes23,
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24,
 					new Object[] { ClpSerializer.translateInput(link) });
 		}
 		catch (Throwable t) {
@@ -859,4 +882,6 @@ public class LinkLocalServiceClp implements LinkLocalService {
 	private String[] _methodParameterTypes22;
 	private String _methodName23;
 	private String[] _methodParameterTypes23;
+	private String _methodName24;
+	private String[] _methodParameterTypes24;
 }

@@ -258,6 +258,13 @@ public interface LinkLocalService extends BaseLocalService, InvokableLocalServic
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Deletes all the Links that were not modified after the specified date.
+	*
+	* @param olderThen boundary date for the deletion.
+	*/
+	public void deleteOldRecords(java.util.Date olderThen);
+
+	/**
 	* Method loads links auto-generated or explicitly created links from
 	* database. Method supports paging.
 	*

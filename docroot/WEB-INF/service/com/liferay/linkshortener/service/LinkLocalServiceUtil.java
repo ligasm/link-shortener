@@ -286,6 +286,15 @@ public class LinkLocalServiceUtil {
 	}
 
 	/**
+	* Deletes all the Links that were not modified after the specified date.
+	*
+	* @param olderThen boundary date for the deletion.
+	*/
+	public static void deleteOldRecords(java.util.Date olderThen) {
+		getService().deleteOldRecords(olderThen);
+	}
+
+	/**
 	* Method loads links auto-generated or explicitly created links from
 	* database. Method supports paging.
 	*
