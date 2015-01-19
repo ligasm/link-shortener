@@ -25,4 +25,7 @@ public class ApplicationPropsValues {
 	public static final String LINK_SHORTENER_HOSTNAME = GetterUtil.getString(
 		PropsUtil.get(ApplicationConstants.LINK_SHORTENER_HOSTNAME));
 
+	public static final int LINK_SHORTENER_LINK_TTL = GetterUtil.getInteger(
+		PropsUtil.get(ApplicationConstants.LINK_SHORTENER_LINK_TTL), 6);
+
 }
