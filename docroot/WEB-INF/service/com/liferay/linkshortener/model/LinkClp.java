@@ -39,10 +39,12 @@ public class LinkClp extends BaseModelImpl<Link> implements Link {
 	public LinkClp() {
 	}
 
+	@Override
 	public Class<?> getModelClass() {
 		return Link.class;
 	}
 
+	@Override
 	public String getModelClassName() {
 		return Link.class.getName();
 	}
@@ -55,10 +57,12 @@ public class LinkClp extends BaseModelImpl<Link> implements Link {
 		setLinkId(primaryKey);
 	}
 
+	@Override
 	public Serializable getPrimaryKeyObj() {
 		return new Long(_linkId);
 	}
 
+	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
@@ -370,6 +374,7 @@ public class LinkClp extends BaseModelImpl<Link> implements Link {
 			new Class[] { Link.class }, new AutoEscapeBeanHandler(this));
 	}
 
+	@Override
 	public Link toUnescapedModel() {
 		return this;
 	}
@@ -456,6 +461,7 @@ public class LinkClp extends BaseModelImpl<Link> implements Link {
 		return sb.toString();
 	}
 
+	@Override
 	public String toXmlString() {
 		StringBundler sb = new StringBundler(28);
 

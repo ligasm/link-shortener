@@ -111,6 +111,27 @@
 		</field>
 	</javadoc>
 	<javadoc>
+		<name>CleanUpJob</name>
+		<type>com.liferay.linkshortener.job.CleanUpJob</type>
+		<author><![CDATA[Miroslav Ligas]]></author>
+		<method>
+			<name>doReceive</name>
+			<param>
+				<name>message</name>
+				<type>com.liferay.portal.kernel.messaging.Message</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<throws>
+				<name>Exception</name>
+				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<field>
+			<name>_LOG</name>
+		</field>
+	</javadoc>
+	<javadoc>
 		<name>LinkImpl</name>
 		<type>com.liferay.linkshortener.model.impl.LinkImpl</type>
 		<comment><![CDATA[The extended model implementation for the Link service. Represents a row in the &quot;LinkShortener_Link&quot; database table, with each column mapped to a property of this class.
@@ -123,7 +144,9 @@ Helper methods and all application logic should be put in this class. Whenever m
 			<name>LinkImpl</name>
 			<comment><![CDATA[NOTE FOR DEVELOPERS:
 
-Never reference this class directly. All methods that expect a link model instance should use the {@link com.liferay.linkshortener.model.Link} interface instead.]]></comment>
+Never reference this class directly. All methods that expect a link model
+instance should use the {@link com.liferay.linkshortener.model.Link}
+interface instead.]]></comment>
 		</method>
 	</javadoc>
 	<javadoc>
@@ -463,6 +486,12 @@ Never reference this class directly. All methods that expect a link model instan
 		<field>
 			<name>_methodParameterTypes48</name>
 		</field>
+		<field>
+			<name>_methodName49</name>
+		</field>
+		<field>
+			<name>_methodParameterTypes49</name>
+		</field>
 	</javadoc>
 	<javadoc>
 		<name>LinkServiceClpInvoker</name>
@@ -509,6 +538,48 @@ Never reference this class directly. All methods that expect a link model instan
 		<field>
 			<name>_methodParameterTypes23</name>
 		</field>
+		<field>
+			<name>_methodName28</name>
+		</field>
+		<field>
+			<name>_methodParameterTypes28</name>
+		</field>
+		<field>
+			<name>_methodName29</name>
+		</field>
+		<field>
+			<name>_methodParameterTypes29</name>
+		</field>
+		<field>
+			<name>_methodName30</name>
+		</field>
+		<field>
+			<name>_methodParameterTypes30</name>
+		</field>
+		<field>
+			<name>_methodName31</name>
+		</field>
+		<field>
+			<name>_methodParameterTypes31</name>
+		</field>
+		<field>
+			<name>_methodName32</name>
+		</field>
+		<field>
+			<name>_methodParameterTypes32</name>
+		</field>
+		<field>
+			<name>_methodName33</name>
+		</field>
+		<field>
+			<name>_methodParameterTypes33</name>
+		</field>
+		<field>
+			<name>_methodName34</name>
+		</field>
+		<field>
+			<name>_methodParameterTypes34</name>
+		</field>
 	</javadoc>
 	<javadoc>
 		<name>LinkLocalServiceImpl</name>
@@ -545,6 +616,16 @@ All custom service methods should be put in this class. Whenever methods are add
 				<required>true</required>
 				<comment><![CDATA[if a system exception occurred]]></comment>
 			</throws>
+		</method>
+		<method>
+			<name>deleteOldRecords</name>
+			<comment><![CDATA[Deletes all the Links that were not modified after the specified date.]]></comment>
+			<param>
+				<name>olderThen</name>
+				<type>java.util.Date</type>
+				<required>true</required>
+				<comment><![CDATA[boundary date for the deletion.]]></comment>
+			</param>
 		</method>
 		<method>
 			<name>getLinksByAutoGen</name>
@@ -653,6 +734,12 @@ All custom service methods should be put in this class. Whenever methods are add
 				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
+		<field>
+			<name>_DELETE_LINKS</name>
+		</field>
+		<field>
+			<name>_LOG</name>
+		</field>
 	</javadoc>
 	<javadoc>
 		<name>LinkServiceImpl</name>
@@ -665,6 +752,173 @@ All custom service methods should be put in this class. Whenever methods are add
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<see><![CDATA[com.liferay.linkshortener.service.base.LinkServiceBaseImpl]]></see>
 		<see><![CDATA[com.liferay.linkshortener.service.LinkServiceUtil]]></see>
+		<method>
+			<name>addLink</name>
+			<comment><![CDATA[Method checks if the short link is already used. If the link is not used it adds a new link to database. Also notifies the appropriate model listeners.]]></comment>
+			<param>
+				<name>link</name>
+				<type>com.liferay.linkshortener.model.Link</type>
+				<required>true</required>
+				<comment><![CDATA[the link]]></comment>
+			</param>
+			<return>
+				<required>true</required>
+				<comment><![CDATA[the link that was added]]></comment>
+			</return>
+			<throws>
+				<name>com.liferay.linkshortener.ShortLinkTakenException</name>
+				<type>com.liferay.linkshortener.ShortLinkTakenException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>deleteLink</name>
+			<comment><![CDATA[Deletes the link with the primary key from the database. Also notifies the appropriate model listeners.]]></comment>
+			<param>
+				<name>linkId</name>
+				<type>long</type>
+				<required>true</required>
+				<comment><![CDATA[the primary key of the link]]></comment>
+			</param>
+			<return>
+				<required>true</required>
+				<comment><![CDATA[the link that was removed]]></comment>
+			</return>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<required>true</required>
+				<comment><![CDATA[if a link with the primary key could not be found]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<required>true</required>
+				<comment><![CDATA[if a system exception occurred]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>getLink</name>
+			<comment><![CDATA[Returns the link with the primary key.]]></comment>
+			<param>
+				<name>linkId</name>
+				<type>long</type>
+				<required>true</required>
+				<comment><![CDATA[the primary key of the link]]></comment>
+			</param>
+			<return>
+				<required>true</required>
+				<comment><![CDATA[the link]]></comment>
+			</return>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<required>true</required>
+				<comment><![CDATA[if a link with the primary key could not be found]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<required>true</required>
+				<comment><![CDATA[if a system exception occurred]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>getLinksByAutoGen</name>
+			<comment><![CDATA[Method loads links auto-generated or explicitly created links from database. Method supports paging.]]></comment>
+			<param>
+				<name>autoGen</name>
+				<type>boolean</type>
+				<required>true</required>
+				<comment><![CDATA[specifies what kind of links should be loaded]]></comment>
+			</param>
+			<param>
+				<name>start</name>
+				<type>int</type>
+				<required>true</required>
+				<comment><![CDATA[the lower bound of the range of links]]></comment>
+			</param>
+			<param>
+				<name>end</name>
+				<type>int</type>
+				<required>true</required>
+				<comment><![CDATA[the upper bound of the range of links (not inclusive)]]></comment>
+			</param>
+			<return>
+				<required>true</required>
+				<comment><![CDATA[the range of matching links]]></comment>
+			</return>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<required>true</required>
+				<comment><![CDATA[if a system exception occurred]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>getLinksByShortLink</name>
+			<comment><![CDATA[Method returns the link which short link matches the provided value.]]></comment>
+			<param>
+				<name>shortLink</name>
+				<type>java.lang.String</type>
+				<required>true</required>
+				<comment><![CDATA[the short link]]></comment>
+			</param>
+			<return>
+				<required>true</required>
+				<comment><![CDATA[the matching link]]></comment>
+			</return>
+			<throws>
+				<name>com.liferay.linkshortener.NoSuchLinkException</name>
+				<type>com.liferay.linkshortener.NoSuchLinkException</type>
+				<required>true</required>
+				<comment><![CDATA[if a matching link could not be found]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<required>true</required>
+				<comment><![CDATA[if a system exception occurred]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>linkFactory</name>
+			<comment><![CDATA[Factory method for a new Link object.]]></comment>
+			<return>
+				<required>true</required>
+				<comment><![CDATA[new object]]></comment>
+			</return>
+		</method>
+		<method>
+			<name>updateLink</name>
+			<comment><![CDATA[Method checks if the short link is already taken if it was modified. If the link is free it updates the entry. Also notifies the appropriate model listeners.]]></comment>
+			<param>
+				<name>link</name>
+				<type>com.liferay.linkshortener.model.Link</type>
+				<required>true</required>
+				<comment><![CDATA[the link]]></comment>
+			</param>
+			<return>
+				<required>true</required>
+				<comment><![CDATA[the link that was updated]]></comment>
+			</return>
+			<throws>
+				<name>com.liferay.linkshortener.ShortLinkTakenException</name>
+				<type>com.liferay.linkshortener.ShortLinkTakenException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<required>true</required>
+				<comment><![CDATA[if a system exception occurred]]></comment>
+			</throws>
+		</method>
 	</javadoc>
 	<javadoc>
 		<name>ShortURLUtil</name>

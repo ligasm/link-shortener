@@ -66,6 +66,7 @@ public class LinkLocalServiceImpl extends LinkLocalServiceBaseImpl {
 	 * @return the link that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public Link addLinkWithCheck(Link link)
 		throws ShortLinkTakenException, SystemException {
 
@@ -109,6 +110,7 @@ public class LinkLocalServiceImpl extends LinkLocalServiceBaseImpl {
 	 *
 	 * @param olderThen boundary date for the deletion.
 	 */
+	@Override
 	@Transactional(
 		isolation = Isolation.READ_COMMITTED,
 		propagation = Propagation.REQUIRES_NEW)
@@ -147,6 +149,7 @@ public class LinkLocalServiceImpl extends LinkLocalServiceBaseImpl {
 	 * @return the range of matching links
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public List<Link> getLinksByAutoGen(boolean autoGen, int start, int end)
 		throws SystemException {
 
@@ -162,6 +165,7 @@ public class LinkLocalServiceImpl extends LinkLocalServiceBaseImpl {
 	 *         could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public Link getLinksByShortLink(String shortLink)
 		throws NoSuchLinkException, SystemException {
 
@@ -173,6 +177,7 @@ public class LinkLocalServiceImpl extends LinkLocalServiceBaseImpl {
 	 *
 	 * @return new object
 	 */
+	@Override
 	public Link linkFactory() {
 		return this.createLink(0);
 	}
@@ -186,6 +191,7 @@ public class LinkLocalServiceImpl extends LinkLocalServiceBaseImpl {
 	 * @return the link that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public Link updateLinkWithCheck(Link link)
 		throws ShortLinkTakenException, SystemException {
 

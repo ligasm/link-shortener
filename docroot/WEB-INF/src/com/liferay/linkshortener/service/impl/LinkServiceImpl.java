@@ -18,14 +18,10 @@ import com.liferay.linkshortener.NoSuchLinkException;
 import com.liferay.linkshortener.ShortLinkTakenException;
 import com.liferay.linkshortener.model.Link;
 import com.liferay.linkshortener.service.base.LinkServiceBaseImpl;
-import com.liferay.linkshortener.service.util.ShortURLUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
-import java.util.Date;
 import java.util.List;
-
-import static com.liferay.linkshortener.util.ApplicationConstants.AUTO_SHORTEN_PREFIX;
 
 /**
  * The implementation of the link remote service.
@@ -58,8 +54,8 @@ public class LinkServiceImpl extends LinkServiceBaseImpl {
 	 *
 	 * @param  link the link
 	 * @return the link that was added
-	 * @throws com.liferay.portal.kernel.exception.SystemException if a system exception occurred
 	 */
+	@Override
 	public Link addLink(Link link)
 		throws ShortLinkTakenException, SystemException {
 
@@ -67,25 +63,30 @@ public class LinkServiceImpl extends LinkServiceBaseImpl {
 	}
 
 	/**
-	 * Deletes the link with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Deletes the link with the primary key from the database. Also notifies
+	 * the appropriate model listeners.
 	 *
-	 * @param linkId the primary key of the link
+	 * @param  linkId the primary key of the link
 	 * @return the link that was removed
 	 * @throws PortalException if a link with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Link deleteLink(long linkId) throws PortalException, SystemException {
+	@Override
+	public Link deleteLink(long linkId)
+		throws PortalException, SystemException {
+
 		return linkLocalService.deleteLink(linkId);
 	}
 
 	/**
 	 * Returns the link with the primary key.
 	 *
-	 * @param linkId the primary key of the link
+	 * @param  linkId the primary key of the link
 	 * @return the link
 	 * @throws PortalException if a link with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public Link getLink(long linkId) throws PortalException, SystemException {
 		return linkLocalService.getLink(linkId);
 	}
@@ -100,6 +101,7 @@ public class LinkServiceImpl extends LinkServiceBaseImpl {
 	 * @return the range of matching links
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public List<Link> getLinksByAutoGen(boolean autoGen, int start, int end)
 		throws SystemException {
 
@@ -115,6 +117,7 @@ public class LinkServiceImpl extends LinkServiceBaseImpl {
 	 *         could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public Link getLinksByShortLink(String shortLink)
 		throws NoSuchLinkException, SystemException {
 
@@ -126,6 +129,7 @@ public class LinkServiceImpl extends LinkServiceBaseImpl {
 	 *
 	 * @return new object
 	 */
+	@Override
 	public Link linkFactory() {
 		return linkLocalService.linkFactory();
 	}
@@ -139,6 +143,7 @@ public class LinkServiceImpl extends LinkServiceBaseImpl {
 	 * @return the link that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public Link updateLink(Link link)
 		throws ShortLinkTakenException, SystemException {
 

@@ -31,7 +31,7 @@ public class CleanUpJob extends BaseMessageListener {
 	@Override
 	protected void doReceive(Message message) throws Exception {
 
-		if(_LOG.isInfoEnabled()){
+		if (_LOG.isInfoEnabled()) {
 			_LOG.info("Cleaning up Links.");
 		}
 
