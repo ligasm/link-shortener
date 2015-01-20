@@ -15,13 +15,15 @@
 package com.liferay.linkshortener.job;
 
 import com.liferay.linkshortener.service.LinkLocalServiceUtil;
-import com.liferay.linkshortener.util.ApplicationPropsValues;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 
 import java.util.Date;
+
+import static com.liferay.linkshortener.util.ApplicationPropsValues.LINK_SHORTENER_LINK_TTL;
+import static com.liferay.linkshortener.util.ApplicationPropsValues.LINK_SHORTENER_CLEANUP_LIMIT;
 
 /**
  * @author Miroslav Ligas
@@ -31,16 +33,20 @@ public class CleanUpJob extends BaseMessageListener {
 	@Override
 	protected void doReceive(Message message) throws Exception {
 
-		if (_LOG.isInfoEnabled()) {
-			_LOG.info("Cleaning up Links.");
+		int totalRecords = LinkLocalServiceUtil.getLinksCount();
+
+		if(totalRecords > LINK_SHORTENER_CLEANUP_LIMIT) {
+
+			if (_LOG.isInfoEnabled()) {
+				_LOG.info("Cleaning up Links.");
+			}
+
+			long linkTll = LINK_SHORTENER_LINK_TTL * 30 * 24 * 60 * 60 * 1000l;
+
+			Date linkTllDate = new Date(new Date().getTime() - linkTll);
+
+			LinkLocalServiceUtil.deleteOldRecords(linkTllDate);
 		}
-
-		long linkTll =
-			ApplicationPropsValues.LINK_SHORTENER_LINK_TTL* 30 * 24 * 60 * 1000;
-
-		Date linkTllDate = new Date(new Date().getTime() - linkTll);
-
-		LinkLocalServiceUtil.deleteOldRecords(linkTllDate);
 	}
 
 	private static Log _LOG = LogFactoryUtil.getLog(CleanUpJob.class);

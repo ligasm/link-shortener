@@ -13,9 +13,10 @@
 		<scheduler-entry>
 			<scheduler-event-listener-class>com.liferay.linkshortener.job.CleanUpJob</scheduler-event-listener-class>
 			<trigger>
-				<cron>
-					<cron-trigger-value>0 30 0 ? * * *</cron-trigger-value>
-				</cron>
+				<simple>
+					<property-key>link.shortener.cleanup.job.interval</property-key>
+					<time-unit>hour</time-unit>
+				</simple>
 			</trigger>
 		</scheduler-entry>
 		<header-portlet-css>/css/main.css</header-portlet-css>
