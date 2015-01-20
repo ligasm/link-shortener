@@ -62,7 +62,6 @@ public class LinkServiceWrapper implements LinkService,
 	*
 	* @param link the link
 	* @return the link that was added
-	* @throws com.liferay.portal.kernel.exception.SystemException if a system exception occurred
 	*/
 	public com.liferay.linkshortener.model.Link addLink(
 		com.liferay.linkshortener.model.Link link)
@@ -72,7 +71,8 @@ public class LinkServiceWrapper implements LinkService,
 	}
 
 	/**
-	* Deletes the link with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the link with the primary key from the database. Also notifies
+	* the appropriate model listeners.
 	*
 	* @param linkId the primary key of the link
 	* @return the link that was removed

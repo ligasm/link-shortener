@@ -368,6 +368,157 @@ public class LinkUtil {
 	}
 
 	/**
+	* Returns all the links where shortLink = &#63; and autoGen = &#63;.
+	*
+	* @param shortLink the short link
+	* @param autoGen the auto gen
+	* @return the matching links
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.linkshortener.model.Link> findByLL_AG(
+		java.lang.String shortLink, boolean autoGen)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByLL_AG(shortLink, autoGen);
+	}
+
+	/**
+	* Returns a range of all the links where shortLink = &#63; and autoGen = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param shortLink the short link
+	* @param autoGen the auto gen
+	* @param start the lower bound of the range of links
+	* @param end the upper bound of the range of links (not inclusive)
+	* @return the range of matching links
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.linkshortener.model.Link> findByLL_AG(
+		java.lang.String shortLink, boolean autoGen, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByLL_AG(shortLink, autoGen, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the links where shortLink = &#63; and autoGen = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param shortLink the short link
+	* @param autoGen the auto gen
+	* @param start the lower bound of the range of links
+	* @param end the upper bound of the range of links (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching links
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.linkshortener.model.Link> findByLL_AG(
+		java.lang.String shortLink, boolean autoGen, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByLL_AG(shortLink, autoGen, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first link in the ordered set where shortLink = &#63; and autoGen = &#63;.
+	*
+	* @param shortLink the short link
+	* @param autoGen the auto gen
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching link
+	* @throws com.liferay.linkshortener.NoSuchLinkException if a matching link could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.linkshortener.model.Link findByLL_AG_First(
+		java.lang.String shortLink, boolean autoGen,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.linkshortener.NoSuchLinkException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByLL_AG_First(shortLink, autoGen, orderByComparator);
+	}
+
+	/**
+	* Returns the first link in the ordered set where shortLink = &#63; and autoGen = &#63;.
+	*
+	* @param shortLink the short link
+	* @param autoGen the auto gen
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching link, or <code>null</code> if a matching link could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.linkshortener.model.Link fetchByLL_AG_First(
+		java.lang.String shortLink, boolean autoGen,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByLL_AG_First(shortLink, autoGen, orderByComparator);
+	}
+
+	/**
+	* Returns the last link in the ordered set where shortLink = &#63; and autoGen = &#63;.
+	*
+	* @param shortLink the short link
+	* @param autoGen the auto gen
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching link
+	* @throws com.liferay.linkshortener.NoSuchLinkException if a matching link could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.linkshortener.model.Link findByLL_AG_Last(
+		java.lang.String shortLink, boolean autoGen,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.linkshortener.NoSuchLinkException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByLL_AG_Last(shortLink, autoGen, orderByComparator);
+	}
+
+	/**
+	* Returns the last link in the ordered set where shortLink = &#63; and autoGen = &#63;.
+	*
+	* @param shortLink the short link
+	* @param autoGen the auto gen
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching link, or <code>null</code> if a matching link could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.linkshortener.model.Link fetchByLL_AG_Last(
+		java.lang.String shortLink, boolean autoGen,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByLL_AG_Last(shortLink, autoGen, orderByComparator);
+	}
+
+	/**
+	* Returns the links before and after the current link in the ordered set where shortLink = &#63; and autoGen = &#63;.
+	*
+	* @param linkId the primary key of the current link
+	* @param shortLink the short link
+	* @param autoGen the auto gen
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next link
+	* @throws com.liferay.linkshortener.NoSuchLinkException if a link with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.linkshortener.model.Link[] findByLL_AG_PrevAndNext(
+		long linkId, java.lang.String shortLink, boolean autoGen,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.linkshortener.NoSuchLinkException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByLL_AG_PrevAndNext(linkId, shortLink, autoGen,
+			orderByComparator);
+	}
+
+	/**
 	* Returns all the links where autoGen = &#63;.
 	*
 	* @param autoGen the auto gen
@@ -716,6 +867,18 @@ public class LinkUtil {
 	}
 
 	/**
+	* Removes all the links where shortLink = &#63; and autoGen = &#63; from the database.
+	*
+	* @param shortLink the short link
+	* @param autoGen the auto gen
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByLL_AG(java.lang.String shortLink, boolean autoGen)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByLL_AG(shortLink, autoGen);
+	}
+
+	/**
 	* Removes all the links where autoGen = &#63; from the database.
 	*
 	* @param autoGen the auto gen
@@ -770,6 +933,19 @@ public class LinkUtil {
 	public static int countBySL_AG(java.lang.String shortLink, boolean autoGen)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().countBySL_AG(shortLink, autoGen);
+	}
+
+	/**
+	* Returns the number of links where shortLink = &#63; and autoGen = &#63;.
+	*
+	* @param shortLink the short link
+	* @param autoGen the auto gen
+	* @return the number of matching links
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByLL_AG(java.lang.String shortLink, boolean autoGen)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByLL_AG(shortLink, autoGen);
 	}
 
 	/**

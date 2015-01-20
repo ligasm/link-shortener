@@ -69,7 +69,6 @@ public class LinkServiceUtil {
 	*
 	* @param link the link
 	* @return the link that was added
-	* @throws com.liferay.portal.kernel.exception.SystemException if a system exception occurred
 	*/
 	public static com.liferay.linkshortener.model.Link addLink(
 		com.liferay.linkshortener.model.Link link)
@@ -79,7 +78,8 @@ public class LinkServiceUtil {
 	}
 
 	/**
-	* Deletes the link with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the link with the primary key from the database. Also notifies
+	* the appropriate model listeners.
 	*
 	* @param linkId the primary key of the link
 	* @return the link that was removed

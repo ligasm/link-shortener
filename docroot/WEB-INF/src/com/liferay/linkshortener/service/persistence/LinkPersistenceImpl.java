@@ -107,6 +107,25 @@ public class LinkPersistenceImpl extends BasePersistenceImpl<Link>
 			LinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySL_AG",
 			new String[] { String.class.getName(), Boolean.class.getName() });
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_LL_AG = new FinderPath(LinkModelImpl.ENTITY_CACHE_ENABLED,
+			LinkModelImpl.FINDER_CACHE_ENABLED, LinkImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLL_AG",
+			new String[] {
+				String.class.getName(), Boolean.class.getName(),
+				
+			"java.lang.Integer", "java.lang.Integer",
+				"com.liferay.portal.kernel.util.OrderByComparator"
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LL_AG = new FinderPath(LinkModelImpl.ENTITY_CACHE_ENABLED,
+			LinkModelImpl.FINDER_CACHE_ENABLED, LinkImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByLL_AG",
+			new String[] { String.class.getName(), Boolean.class.getName() },
+			LinkModelImpl.SHORTLINK_COLUMN_BITMASK |
+			LinkModelImpl.AUTOGEN_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_LL_AG = new FinderPath(LinkModelImpl.ENTITY_CACHE_ENABLED,
+			LinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLL_AG",
+			new String[] { String.class.getName(), Boolean.class.getName() });
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_AG = new FinderPath(LinkModelImpl.ENTITY_CACHE_ENABLED,
 			LinkModelImpl.FINDER_CACHE_ENABLED, LinkImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAG",
@@ -429,6 +448,27 @@ public class LinkPersistenceImpl extends BasePersistenceImpl<Link>
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+					args);
+			}
+
+			if ((linkModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LL_AG.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						linkModelImpl.getOriginalShortLink(),
+						Boolean.valueOf(linkModelImpl.getOriginalAutoGen())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LL_AG, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LL_AG,
+					args);
+
+				args = new Object[] {
+						linkModelImpl.getShortLink(),
+						Boolean.valueOf(linkModelImpl.getAutoGen())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LL_AG, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LL_AG,
 					args);
 			}
 
@@ -1143,6 +1183,429 @@ public class LinkPersistenceImpl extends BasePersistenceImpl<Link>
 			else {
 				return (Link)result;
 			}
+		}
+	}
+
+	/**
+	 * Returns all the links where shortLink = &#63; and autoGen = &#63;.
+	 *
+	 * @param shortLink the short link
+	 * @param autoGen the auto gen
+	 * @return the matching links
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Link> findByLL_AG(String shortLink, boolean autoGen)
+		throws SystemException {
+		return findByLL_AG(shortLink, autoGen, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the links where shortLink = &#63; and autoGen = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param shortLink the short link
+	 * @param autoGen the auto gen
+	 * @param start the lower bound of the range of links
+	 * @param end the upper bound of the range of links (not inclusive)
+	 * @return the range of matching links
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Link> findByLL_AG(String shortLink, boolean autoGen, int start,
+		int end) throws SystemException {
+		return findByLL_AG(shortLink, autoGen, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the links where shortLink = &#63; and autoGen = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param shortLink the short link
+	 * @param autoGen the auto gen
+	 * @param start the lower bound of the range of links
+	 * @param end the upper bound of the range of links (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching links
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Link> findByLL_AG(String shortLink, boolean autoGen, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LL_AG;
+			finderArgs = new Object[] { shortLink, autoGen };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_LL_AG;
+			finderArgs = new Object[] {
+					shortLink, autoGen,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<Link> list = (List<Link>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (Link link : list) {
+				if (!Validator.equals(shortLink, link.getShortLink()) ||
+						(autoGen != link.getAutoGen())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_LINK_WHERE);
+
+			if (shortLink == null) {
+				query.append(_FINDER_COLUMN_LL_AG_SHORTLINK_1);
+			}
+			else {
+				if (shortLink.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_LL_AG_SHORTLINK_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_LL_AG_SHORTLINK_2);
+				}
+			}
+
+			query.append(_FINDER_COLUMN_LL_AG_AUTOGEN_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (shortLink != null) {
+					qPos.add(shortLink);
+				}
+
+				qPos.add(autoGen);
+
+				list = (List<Link>)QueryUtil.list(q, getDialect(), start, end);
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (list == null) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
+				else {
+					cacheResult(list);
+
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
+
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first link in the ordered set where shortLink = &#63; and autoGen = &#63;.
+	 *
+	 * @param shortLink the short link
+	 * @param autoGen the auto gen
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching link
+	 * @throws com.liferay.linkshortener.NoSuchLinkException if a matching link could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Link findByLL_AG_First(String shortLink, boolean autoGen,
+		OrderByComparator orderByComparator)
+		throws NoSuchLinkException, SystemException {
+		Link link = fetchByLL_AG_First(shortLink, autoGen, orderByComparator);
+
+		if (link != null) {
+			return link;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("shortLink=");
+		msg.append(shortLink);
+
+		msg.append(", autoGen=");
+		msg.append(autoGen);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchLinkException(msg.toString());
+	}
+
+	/**
+	 * Returns the first link in the ordered set where shortLink = &#63; and autoGen = &#63;.
+	 *
+	 * @param shortLink the short link
+	 * @param autoGen the auto gen
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching link, or <code>null</code> if a matching link could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Link fetchByLL_AG_First(String shortLink, boolean autoGen,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<Link> list = findByLL_AG(shortLink, autoGen, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last link in the ordered set where shortLink = &#63; and autoGen = &#63;.
+	 *
+	 * @param shortLink the short link
+	 * @param autoGen the auto gen
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching link
+	 * @throws com.liferay.linkshortener.NoSuchLinkException if a matching link could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Link findByLL_AG_Last(String shortLink, boolean autoGen,
+		OrderByComparator orderByComparator)
+		throws NoSuchLinkException, SystemException {
+		Link link = fetchByLL_AG_Last(shortLink, autoGen, orderByComparator);
+
+		if (link != null) {
+			return link;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("shortLink=");
+		msg.append(shortLink);
+
+		msg.append(", autoGen=");
+		msg.append(autoGen);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchLinkException(msg.toString());
+	}
+
+	/**
+	 * Returns the last link in the ordered set where shortLink = &#63; and autoGen = &#63;.
+	 *
+	 * @param shortLink the short link
+	 * @param autoGen the auto gen
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching link, or <code>null</code> if a matching link could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Link fetchByLL_AG_Last(String shortLink, boolean autoGen,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByLL_AG(shortLink, autoGen);
+
+		List<Link> list = findByLL_AG(shortLink, autoGen, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the links before and after the current link in the ordered set where shortLink = &#63; and autoGen = &#63;.
+	 *
+	 * @param linkId the primary key of the current link
+	 * @param shortLink the short link
+	 * @param autoGen the auto gen
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next link
+	 * @throws com.liferay.linkshortener.NoSuchLinkException if a link with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Link[] findByLL_AG_PrevAndNext(long linkId, String shortLink,
+		boolean autoGen, OrderByComparator orderByComparator)
+		throws NoSuchLinkException, SystemException {
+		Link link = findByPrimaryKey(linkId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Link[] array = new LinkImpl[3];
+
+			array[0] = getByLL_AG_PrevAndNext(session, link, shortLink,
+					autoGen, orderByComparator, true);
+
+			array[1] = link;
+
+			array[2] = getByLL_AG_PrevAndNext(session, link, shortLink,
+					autoGen, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Link getByLL_AG_PrevAndNext(Session session, Link link,
+		String shortLink, boolean autoGen, OrderByComparator orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_LINK_WHERE);
+
+		if (shortLink == null) {
+			query.append(_FINDER_COLUMN_LL_AG_SHORTLINK_1);
+		}
+		else {
+			if (shortLink.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_LL_AG_SHORTLINK_3);
+			}
+			else {
+				query.append(_FINDER_COLUMN_LL_AG_SHORTLINK_2);
+			}
+		}
+
+		query.append(_FINDER_COLUMN_LL_AG_AUTOGEN_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		if (shortLink != null) {
+			qPos.add(shortLink);
+		}
+
+		qPos.add(autoGen);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(link);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<Link> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
 		}
 	}
 
@@ -2047,6 +2510,20 @@ public class LinkPersistenceImpl extends BasePersistenceImpl<Link>
 	}
 
 	/**
+	 * Removes all the links where shortLink = &#63; and autoGen = &#63; from the database.
+	 *
+	 * @param shortLink the short link
+	 * @param autoGen the auto gen
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByLL_AG(String shortLink, boolean autoGen)
+		throws SystemException {
+		for (Link link : findByLL_AG(shortLink, autoGen)) {
+			remove(link);
+		}
+	}
+
+	/**
 	 * Removes all the links where autoGen = &#63; from the database.
 	 *
 	 * @param autoGen the auto gen
@@ -2208,6 +2685,77 @@ public class LinkPersistenceImpl extends BasePersistenceImpl<Link>
 				}
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_SL_AG,
+					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of links where shortLink = &#63; and autoGen = &#63;.
+	 *
+	 * @param shortLink the short link
+	 * @param autoGen the auto gen
+	 * @return the number of matching links
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByLL_AG(String shortLink, boolean autoGen)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { shortLink, autoGen };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_LL_AG,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_LINK_WHERE);
+
+			if (shortLink == null) {
+				query.append(_FINDER_COLUMN_LL_AG_SHORTLINK_1);
+			}
+			else {
+				if (shortLink.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_LL_AG_SHORTLINK_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_LL_AG_SHORTLINK_2);
+				}
+			}
+
+			query.append(_FINDER_COLUMN_LL_AG_AUTOGEN_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (shortLink != null) {
+					qPos.add(shortLink);
+				}
+
+				qPos.add(autoGen);
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_LL_AG,
 					finderArgs, count);
 
 				closeSession(session);
@@ -2423,6 +2971,10 @@ public class LinkPersistenceImpl extends BasePersistenceImpl<Link>
 	private static final String _FINDER_COLUMN_SL_AG_SHORTLINK_2 = "link.shortLink = ? AND ";
 	private static final String _FINDER_COLUMN_SL_AG_SHORTLINK_3 = "(link.shortLink IS NULL OR link.shortLink = ?) AND ";
 	private static final String _FINDER_COLUMN_SL_AG_AUTOGEN_2 = "link.autoGen = ?";
+	private static final String _FINDER_COLUMN_LL_AG_SHORTLINK_1 = "link.shortLink IS NULL AND ";
+	private static final String _FINDER_COLUMN_LL_AG_SHORTLINK_2 = "link.shortLink = ? AND ";
+	private static final String _FINDER_COLUMN_LL_AG_SHORTLINK_3 = "(link.shortLink IS NULL OR link.shortLink = ?) AND ";
+	private static final String _FINDER_COLUMN_LL_AG_AUTOGEN_2 = "link.autoGen = ?";
 	private static final String _FINDER_COLUMN_AG_AUTOGEN_2 = "link.autoGen = ?";
 	private static final String _FINDER_COLUMN_SL_SHORTLINK_1 = "link.shortLink IS NULL";
 	private static final String _FINDER_COLUMN_SL_SHORTLINK_2 = "link.shortLink = ?";
