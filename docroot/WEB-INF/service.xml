@@ -23,6 +23,11 @@
 			<finder-column name="autoGen" />
 		</finder>
 
+		<finder name="LL_AG" return-type="Collection">
+			<finder-column name="shortLink" />
+			<finder-column name="autoGen" />
+		</finder>
+
 		<finder name="AG" return-type="Collection">
 			<finder-column name="autoGen" />
 		</finder>
