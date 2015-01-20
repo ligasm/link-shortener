@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.messaging.Message;
 
 import java.util.Date;
 
-import static com.liferay.linkshortener.util.ApplicationPropsValues.LINK_SHORTENER_LINK_TTL;
 import static com.liferay.linkshortener.util.ApplicationPropsValues.LINK_SHORTENER_CLEANUP_LIMIT;
+import static com.liferay.linkshortener.util.ApplicationPropsValues.LINK_SHORTENER_LINK_TTL;
 
 /**
  * @author Miroslav Ligas
@@ -35,8 +35,7 @@ public class CleanUpJob extends BaseMessageListener {
 
 		int totalRecords = LinkLocalServiceUtil.getLinksCount();
 
-		if(totalRecords > LINK_SHORTENER_CLEANUP_LIMIT) {
-
+		if (totalRecords > LINK_SHORTENER_CLEANUP_LIMIT) {
 			if (_LOG.isInfoEnabled()) {
 				_LOG.info("Cleaning up Links.");
 			}
