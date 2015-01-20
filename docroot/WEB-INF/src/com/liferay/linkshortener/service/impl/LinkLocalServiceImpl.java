@@ -66,8 +66,8 @@ public class LinkLocalServiceImpl extends LinkLocalServiceBaseImpl {
 	 *
 	 * @param  link the link
 	 * @return the link that was added
-	 * @throws com.liferay.portal.kernel.exception.SystemException if a system exception occurred
-	 * @throws com.liferay.linkshortener.ShortLinkTakenException if the short link is already taken
+	 * @throws com.liferay.linkshortener.ShortLinkTakenException if the short
+	 *         link is already taken
 	 */
 	@Override
 	public Link addLinkWithCheck(Link link)

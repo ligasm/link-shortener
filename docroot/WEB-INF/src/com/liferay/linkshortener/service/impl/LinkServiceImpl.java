@@ -48,12 +48,16 @@ public class LinkServiceImpl extends LinkServiceBaseImpl {
 	 */
 
 	/**
-	 * Method checks if the short link is already used. If the link is not used
-	 * it adds a new link to database. Also notifies the appropriate model
-	 * listeners.
+	 * Method checks if the short link is already used. If the link is used an
+	 * Exception will be thrown. If the link is unused the original link will be
+	 * checked if it is already in the database. If the link is found, it will
+	 * be returned otherwise a new link will be stored to database and all
+	 * appropriate model listeners will be notified.
 	 *
 	 * @param  link the link
 	 * @return the link that was added
+	 * @throws com.liferay.linkshortener.ShortLinkTakenException if the short
+	 *         link is already taken
 	 */
 	@Override
 	public Link addLink(Link link)
@@ -115,7 +119,7 @@ public class LinkServiceImpl extends LinkServiceBaseImpl {
 	 * @return the matching link
 	 * @throws com.liferay.linkshortener.NoSuchLinkException if a matching link
 	 *         could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws SystemException if a system exception occurred.
 	 */
 	@Override
 	public Link getLinksByShortLink(String shortLink)

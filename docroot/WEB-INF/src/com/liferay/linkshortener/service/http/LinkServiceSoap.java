@@ -66,12 +66,16 @@ import java.rmi.RemoteException;
  */
 public class LinkServiceSoap {
 	/**
-	* Method checks if the short link is already used. If the link is not used
-	* it adds a new link to database. Also notifies the appropriate model
-	* listeners.
+	* Method checks if the short link is already used. If the link is used an
+	* Exception will be thrown. If the link is unused the original link will be
+	* checked if it is already in the database. If the link is found, it will
+	* be returned otherwise a new link will be stored to database and all
+	* appropriate model listeners will be notified.
 	*
 	* @param link the link
 	* @return the link that was added
+	* @throws com.liferay.portal.kernel.exception.SystemException if a system exception occurred
+	* @throws com.liferay.linkshortener.ShortLinkTakenException if the short link is already taken
 	*/
 	public static com.liferay.linkshortener.model.LinkSoap addLink(
 		com.liferay.linkshortener.model.LinkSoap link)
@@ -166,7 +170,8 @@ public class LinkServiceSoap {
 	* @return the matching link
 	* @throws com.liferay.linkshortener.NoSuchLinkException if a matching link
 	could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException if a system exception occurred.
+	* @throws NoSuchLinkException if the link does not exist.
 	*/
 	public static com.liferay.linkshortener.model.LinkSoap getLinksByShortLink(
 		java.lang.String shortLink) throws RemoteException {
@@ -209,6 +214,7 @@ public class LinkServiceSoap {
 	* @param link the link
 	* @return the link that was updated
 	* @throws SystemException if a system exception occurred
+	* @throws ShortLinkTakenException if the link is already taken
 	*/
 	public static com.liferay.linkshortener.model.LinkSoap updateLink(
 		com.liferay.linkshortener.model.LinkSoap link)

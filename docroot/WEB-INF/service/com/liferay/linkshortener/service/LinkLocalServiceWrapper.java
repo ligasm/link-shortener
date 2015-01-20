@@ -263,13 +263,16 @@ public class LinkLocalServiceWrapper implements LinkLocalService,
 	}
 
 	/**
-	* Method checks if the short link is already used. If the link is not used
-	* it adds a new link to database. Also notifies the appropriate model
-	* listeners.
+	* Method checks if the short link is already used. If the link is used an
+	* Exception will be thrown. If the link is unused the original link will be
+	* checked if it is already in the database. If the link is found, it will
+	* be returned otherwise a new link will be stored to database and all
+	* appropriate model listeners will be notified.
 	*
 	* @param link the link
 	* @return the link that was added
-	* @throws SystemException if a system exception occurred
+	* @throws com.liferay.portal.kernel.exception.SystemException if a system exception occurred
+	* @throws com.liferay.linkshortener.ShortLinkTakenException if the short link is already taken
 	*/
 	public com.liferay.linkshortener.model.Link addLinkWithCheck(
 		com.liferay.linkshortener.model.Link link)
@@ -311,6 +314,7 @@ public class LinkLocalServiceWrapper implements LinkLocalService,
 	* @throws com.liferay.linkshortener.NoSuchLinkException if a matching link
 	could not be found
 	* @throws SystemException if a system exception occurred
+	* @throws NoSuchLinkException if the link does not exist.
 	*/
 	public com.liferay.linkshortener.model.Link getLinksByShortLink(
 		java.lang.String shortLink)
@@ -336,6 +340,7 @@ public class LinkLocalServiceWrapper implements LinkLocalService,
 	* @param link the link
 	* @return the link that was updated
 	* @throws SystemException if a system exception occurred
+	* @throws ShortLinkTakenException if the link is already taken
 	*/
 	public com.liferay.linkshortener.model.Link updateLinkWithCheck(
 		com.liferay.linkshortener.model.Link link)
