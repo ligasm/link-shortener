@@ -14,18 +14,24 @@
 
 package com.liferay.linkshortener.util;
 
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
-
 /**
  * @author Miroslav Ligas
  */
-public class ApplicationPropsValues {
+public class ApplicationConstants {
 
-	public static final String LINK_SHORTENER_HOSTNAME = GetterUtil.getString(
-		PropsUtil.get(ApplicationConstants.LINK_SHORTENER_HOSTNAME));
+	public static final String AUTO_SHORTEN_PREFIX = "OAU";
 
-	public static final int LINK_SHORTENER_LINK_TTL = GetterUtil.getInteger(
-		PropsUtil.get(ApplicationConstants.LINK_SHORTENER_LINK_TTL), 6);
+	public static final String LINK_SHORTENER_CLEANUP_LIMIT =
+		"link.shortener.cleanup.limit";
+
+	public static final String LINK_SHORTENER_HOSTNAME =
+		"link.shortener.hostname";
+
+	public static final String LINK_SHORTENER_LINK_TTL =
+		"link.shortener.link.ttl";
+
+	public static final short MIN_SHORT_URL = 4;
+
+	public static final int PREFIX_SIZE = AUTO_SHORTEN_PREFIX.length();
 
 }

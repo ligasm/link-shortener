@@ -2,7 +2,6 @@
 <!DOCTYPE hook PUBLIC "-//Liferay//DTD Hook 6.1.0//EN" "http://www.liferay.com/dtd/liferay-hook_6_1_0.dtd">
 
 <hook>
-	<portal-properties>portal.properties</portal-properties>
 	<servlet-filter>
 		<servlet-filter-name>Link Shortener Filter</servlet-filter-name>
 		<servlet-filter-impl>com.liferay.linkshortener.hook.filter.LinkShortenerFilter</servlet-filter-impl>
